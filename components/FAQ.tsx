@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface FaqItem { q: string; a: string; }
@@ -22,17 +22,8 @@ function FaqItem({ item, index, isOpen, onToggle }: {
   item: FaqItem; index: number; isOpen: boolean; onToggle: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVisible(true); io.disconnect(); }
-    }, { threshold: 0.07 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  // Always visible — don't rely on IntersectionObserver (breaks with Lenis on mobile)
+  const visible = true;
 
   // Called when Framer Motion finishes the expand animation
   function onExpandComplete() {
@@ -95,17 +86,6 @@ function FaqItem({ item, index, isOpen, onToggle }: {
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const headingRef = useRef<HTMLDivElement>(null);
-  const [headingVisible, setHeadingVisible] = useState(false);
-
-  useEffect(() => {
-    const el = headingRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setHeadingVisible(true); io.disconnect(); }
-    }, { threshold: 0.07 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
   return (
     <section id="faq">
@@ -115,9 +95,6 @@ export default function FAQ() {
         ref={headingRef}
         style={{
           padding: '0 clamp(20px,5vw,72px)',
-          opacity: headingVisible ? 1 : 0,
-          transform: headingVisible ? 'none' : 'translateY(16px)',
-          transition: 'opacity .8s ease, transform .8s ease',
           marginBottom: 40,
         }}
       >

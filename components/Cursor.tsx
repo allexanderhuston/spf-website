@@ -7,6 +7,9 @@ export default function Cursor() {
   const curORef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Don't run on touch devices
+    if (window.matchMedia('(hover: none)').matches) return;
+
     const cur = curRef.current;
     const curO = curORef.current;
     if (!cur || !curO) return;

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useScroll } from 'framer-motion';
 
 const TICKER_ITEMS = [
   'Sunset Port Festival',
@@ -20,14 +19,13 @@ function buildTickerHTML() {
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const tickerRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
 
   // Build ticker
   useEffect(() => {
     if (tickerRef.current) tickerRef.current.innerHTML = buildTickerHTML();
   }, []);
 
-  // Scroll-scrubbed video — smooth RAF loop drives currentTime
+  // Scroll-scrubbed video — direct window scroll listener (Lenis compatible)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -40,23 +38,22 @@ export default function Hero() {
       const duration = video.duration;
       if (!duration) return;
 
-      // Track target time from scroll
-      const unsub = scrollY.on('change', latest => {
-        targetTime = Math.max(0, Math.min((latest / SCROLL_RANGE) * duration, duration));
-      });
+      // Direct scroll listener — works with Lenis
+      const onScroll = () => {
+        targetTime = Math.max(0, Math.min((window.scrollY / SCROLL_RANGE) * duration, duration));
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
 
-      // RAF loop — lerp currentTime toward target for silky smoothness
+      // RAF lerp for smooth currentTime
       const tick = () => {
         const diff = targetTime - video.currentTime;
-        if (Math.abs(diff) > 0.001) {
-          video.currentTime += diff * 0.38;
-        }
+        if (Math.abs(diff) > 0.001) video.currentTime += diff * 0.38;
         rafId = requestAnimationFrame(tick);
       };
       rafId = requestAnimationFrame(tick);
 
       return () => {
-        unsub();
+        window.removeEventListener('scroll', onScroll);
         cancelAnimationFrame(rafId);
       };
     };
@@ -71,7 +68,7 @@ export default function Hero() {
     }
 
     return () => cleanup?.();
-  }, [scrollY]);
+  }, []);
 
   return (
     <section id="hero">
