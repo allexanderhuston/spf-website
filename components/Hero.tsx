@@ -78,7 +78,8 @@ export default function Hero() {
       {/* Video fixed in place — no parallax movement */}
       <video
         ref={videoRef}
-        src="/assets/hero-scrub.mp4"
+        src="/assets/hero-scrub-sm.mp4"
+        poster="/assets/hero-poster.jpg"
         muted
         playsInline
         preload="auto"
