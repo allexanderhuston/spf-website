@@ -20,7 +20,12 @@ export default function SunBackground() {
 
   // Constant — hero + ticker bar physically cover the sun, revealed as they scroll away.
   // Only fades out near the very bottom.
-  const opacity = useTransform(scrollYProgress, [0.85, 1], [0.35, 0]);
+  // 0 while hero in view → fade in after hero clears → fade out at bottom
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.08, 0.15, 0.85, 1],
+    [0,    0,  0.35,  0.35,  0]
+  );
   const scale   = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 0.9]);
 
   return (
