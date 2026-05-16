@@ -717,6 +717,11 @@ img { display: block; max-width: 100%; }
 
 /* Mobile — centre bottom of screen instead of following cursor */
 @media (hover: none) {
+  /* Restore normal cursor on touch devices */
+  body { cursor: auto !important; }
+  a, button { cursor: auto !important; }
+  #cur, #curO { display: none !important; }
+
   #artist-preview {
     top: auto !important;
     left: 50% !important;
