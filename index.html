@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunset Port Festival — 22 & 23 August 2026 · Pomorie Port</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!-- Motion (Framer Motion vanilla JS) -->
+  <script type="importmap">
+    { "imports": { "motion": "https://cdn.jsdelivr.net/npm/motion@latest/+esm" } }
+  </script>
+  <script type="module">
+    import { animate, scroll, inView, stagger, spring } from "motion";
+    window.Motion = { animate, scroll, inView, stagger, spring };
+  </script>
+
+  <script>const PHASE = 'full';</script>
+  <style>
+    :root {
+      --navy:  #080b18;
+      --navy2: #0d1025;
+      --gold:  #F7A220;
+      --gold2: #ffc040;
+      --w:     #e8e5de;
+      --dim:   rgba(232,229,222,.32);
+      --dim2:  rgba(232,229,222,.55);
+      --bdr:   rgba(232,229,222,.07);
+      --f:     'Barlow', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--w);
+      font-family: var(--f);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+      animation: pageIn .6s ease both;
+    }
+
+    @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ── BACKGROUND TEXTURE ──────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(90deg,
+        rgba(255,255,255,.013) 0px, rgba(255,255,255,.013) 1px,
+        transparent 1px, transparent 30px);
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .18;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    #nav, #hero, #lineup, #venue, #tickets, #faq, #cta, #footer, .mob {
+      position: relative;
+      z-index: 1;
+    }
+
+    a, button { cursor: none; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── CURSOR ──────────────────────────────── */
+    #cur {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      box-shadow: 0 0 10px var(--gold), 0 0 22px rgba(247,162,32,.3);
+      transition: width .12s, height .12s;
+    }
+    #cur.xl { width: 14px; height: 14px; }
+
+    #curO {
+      position: fixed;
+      width: 30px; height: 30px;
+      border: 1px solid rgba(247,162,32,.35);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+    }
+
+    /* ── WAVE CANVAS ────────────────────────── */
+    #waveCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      padding: 0 clamp(20px,4vw,56px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background .35s, backdrop-filter .35s;
+      overflow: visible;
+    }
+
+    #nav.on {
+      background: rgba(8,11,24,.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--bdr);
+    }
+
+    /* LEFT links — flex:1 so logo stays centred */
+    .nav-links-left {
+      flex: 1;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav-links-left li,
+    .nav-links-right li {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links-left li + li::before,
+    .nav-links-right li + li::before {
+      content: '•';
+      color: var(--gold);
+      font-size: .45rem;
+      margin: 0 14px;
+      line-height: 1;
+    }
+
+    .nav-links-left a,
+    .nav-links-right a {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--w);
+      transition: color .2s;
+    }
+
+    .nav-links-left a:hover,
+    .nav-links-right a:hover { color: var(--gold); }
+
+    /* CENTER logo — large before scroll, shrinks into bar on scroll */
+    .nav-logo {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      align-self: flex-start;   /* overflow downward into hero when large */
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 150px;
+      width: auto;
+      display: block;
+      margin-top: 0;
+      transition: height .4s cubic-bezier(.16,1,.3,1),
+                  margin-top .4s cubic-bezier(.16,1,.3,1);
+    }
+
+    /* Scrolled — logo fits inside the 64px bar */
+    #nav.on .nav-logo {
+      align-self: center;
+    }
+
+    #nav.on .nav-logo img {
+      height: 44px;
+      margin-top: 0;
+    }
+
+    /* RIGHT group — flex:1 so logo stays centred */
+    .nav-right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav-links-right {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav-cta {
+      display: block;
+      margin-left: 24px;
+      padding: 8px 22px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50px;
+      color: var(--w);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      transition: border-color .2s, color .2s;
+    }
+
+    .nav-cta:hover { border-color: var(--gold); color: var(--gold); }
+
+    .ham {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 4px;
+      margin-left: 16px;
+    }
+
+    .ham span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--w);
+      transition: transform .3s, opacity .3s;
+    }
+
+    .ham.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .ham.open span:nth-child(2) { opacity: 0; }
+    .ham.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mob {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      z-index: 90;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .mob.open { display: flex; }
+
+    .mob a {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--dim2);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--bdr);
+      width: 80%;
+      text-align: center;
+      transition: color .2s;
+    }
+
+    .mob a:hover, .mob a:last-child { color: var(--gold); }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Background photo */
+    .h-photo {
+      position: absolute;
+      inset: -5%;
+      width: 110%; height: 110%;
+      background: url('assets/hero-banner.png') center 38% / cover no-repeat;
+      opacity: .65;
+      animation: kb 30s ease-in-out alternate infinite;
+      will-change: transform;
+    }
+
+    /* Vignette overlay */
+    .h-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(8,11,24,.6) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(8,11,24,.35) 0%, transparent 40%, transparent 60%, rgba(8,11,24,.6) 100%);
+    }
+
+    @keyframes kb {
+      from { transform: scale(1) translate(0,0); }
+      to   { transform: scale(1.08) translate(-1%,-.5%); }
+    }
+
+    /* Amber stage glow */
+    .h-glow {
+      position: absolute;
+      bottom: -8%; left: -5%; right: -5%;
+      height: 55%;
+      background:
+        radial-gradient(ellipse at 42% 100%, rgba(247,162,32,.13) 0%, transparent 55%),
+        radial-gradient(ellipse at 68% 85%, rgba(217,74,40,.08) 0%, transparent 48%);
+      animation: glowB 9s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes glowB {
+      0%, 100% { opacity: .6 }
+      50%       { opacity: 1 }
+    }
+
+    /* Hero main body — NO logo, just tagline + dates + location + CTAs */
+    .h-main {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 68px 24px 90px;
+      text-align: center;
+      gap: clamp(14px,2.8vh,24px);
+    }
+
+    /* Tagline */
+    .h-tagline {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      font-variant: small-caps;
+      color: var(--gold);
+      opacity: 0;
+      animation: hFade .8s ease .2s both;
+    }
+
+    /* Date display */
+    .h-dates {
+      display: flex;
+      align-items: center;
+      gap: clamp(20px,4vw,56px);
+      opacity: 0;
+      animation: hFade .8s ease .5s both;
+    }
+
+    .hd-num {
+      font-size: clamp(3.5rem,10vw,9rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -.02em;
+      text-shadow:
+        0 0 40px rgba(247,162,32,.55),
+        0 0 80px rgba(247,162,32,.25),
+        0 4px 24px rgba(0,0,0,.5);
+    }
+
+    .hd-div {
+      width: 1px;
+      height: 70px;
+      background: rgba(247,162,32,.35);
+    }
+
+    /* Location */
+    .h-loc {
+      font-size: clamp(.6rem,1.1vw,.82rem);
+      font-weight: 300;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--w);
+      opacity: 0;
+      animation: hFade .8s ease .75s both;
+    }
+
+    /* CTA buttons */
+    .h-ctas {
+      display: flex;
+      gap: 14px;
+      opacity: 0;
+      animation: hFade .8s ease .95s both;
+    }
+
+    .btn-fill {
+      padding: 13px 32px;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      border-radius: 50px;
+      border: none;
+      transition: background .2s, box-shadow .2s;
+      box-shadow:
+        0 0 24px rgba(247,162,32,.45),
+        0 4px 20px rgba(0,0,0,.35);
+    }
+
+    .btn-fill:hover {
+      background: var(--gold2);
+      box-shadow: 0 0 36px rgba(247,162,32,.65), 0 4px 20px rgba(0,0,0,.35);
+    }
+
+    .btn-outline {
+      padding: 12px 30px;
+      border: 1.5px solid rgba(232,229,222,.7);
+      border-radius: 50px;
+      color: var(--w);
+      font-size: .68rem;
+      font-weight: 400;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      transition: border-color .2s, color .2s, box-shadow .2s;
+      box-shadow:
+        0 0 18px rgba(255,255,255,.08),
+        0 4px 20px rgba(0,0,0,.35);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 24px rgba(247,162,32,.3), 0 4px 20px rgba(0,0,0,.35);
+    }
+
+    /* Scroll cue */
+    .h-cue {
+      position: absolute;
+      bottom: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: hFade 1s ease 1.4s both;
+    }
+
+    .cue-d {
+      width: 4px; height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pls 2s ease infinite;
+    }
+
+    .cue-l {
+      width: 1px; height: 28px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: lineA 2.2s ease infinite;
+    }
+
+    @keyframes pls { 0%,100%{opacity:.2} 50%{opacity:1} }
+
+    @keyframes lineA {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+    }
+
+    @keyframes hFade {
+      from { opacity: 0; transform: translateY(20px) }
+      to   { opacity: 1; transform: none }
+    }
+
+    /* ── TICKER ─────────────────────────────── */
+    .h-ticker {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 3;
+      padding: 11px 0;
+      background: rgba(8,11,24,.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(232,229,222,.06);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .h-ticker-track {
+      display: inline-flex;
+      align-items: center;
+      animation: ticker 38s linear infinite;
+    }
+
+    .h-ticker-track:hover { animation-play-state: paused; }
+
+    .ti {
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(232,229,222,.38);
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 10px;
+    }
+
+    .ti .sep { color: var(--gold); font-size: .55rem; margin: 0 14px; opacity: .8; }
+
+    .ti-wave {
+      width: 20px; height: 12px;
+      fill: var(--gold);
+      opacity: .6;
+      flex-shrink: 0;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0) }
+      to   { transform: translateX(-50%) }
+    }
+
+    /* ══════════════════════════════════════════
+       SHARED SECTION TYPOGRAPHY
+    ══════════════════════════════════════════ */
+    .sec-label {
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .sec-title {
+      font-size: clamp(2.2rem,5vw,4.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .01em;
+      line-height: 1;
+      color: var(--w);
+      margin-bottom: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       VENUE SECTION
+    ══════════════════════════════════════════ */
+    #venue {
+      position: relative;
+      background:
+        /* colour stops cut off at 40% so the bottom 60% is clean navy */
+        radial-gradient(ellipse at 78% 0%,  rgba(180,80,20,.52)  0%, transparent 38%),
+        radial-gradient(ellipse at 55% 35%, rgba(80,30,100,.38)  0%, transparent 38%),
+        radial-gradient(ellipse at 22% 50%, rgba(15,25,90,.5)    0%, transparent 38%),
+        linear-gradient(to bottom,
+          rgba(13,21,53,.98)  0%,
+          rgba(14,10,32,.88) 20%,
+          rgba(8,11,24,.92)  42%,
+          rgba(8,11,24,1)    62%,
+          rgba(8,11,24,1)   100%);
+    }
+
+    /* Grid overlay — same hairlines as rest of page */
+    #venue::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(90deg,
+        rgba(255,255,255,.013) 0px,
+        rgba(255,255,255,.013) 1px,
+        transparent 1px,
+        transparent 30px);
+    }
+
+    #lineup, #tickets, #faq, #footer {
+      position: relative;
+    }
+
+    /* Lineup top — starts at full solid navy (matching venue bottom exactly), fades to transparent */
+    #lineup::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 220px;
+      pointer-events: none;
+      z-index: 0;
+      background: linear-gradient(to bottom,
+        rgba(8,11,24,1)   0%,
+        rgba(8,11,24,.85) 30%,
+        rgba(8,11,24,.4)  65%,
+        transparent       100%);
+    }
+
+    /* Full bleed background photo */
+
+    /* Two-column grid */
+    .venue-grid {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      padding: 80px clamp(20px,5vw,72px) 140px;
+    }
+
+    /* LEFT column — now full width */
+    .venue-left { width: 100%; padding-right: 0; }
+
+    .venue-left .sec-label { margin-bottom: 8px; }
+    .venue-left .sec-title { margin-bottom: 48px; }
+
+    /* Icon+text venue items — 2 columns */
+    .venue-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px 60px;
+    }
+
+    .venue-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .vi-icon {
+      width: 48px; height: 48px;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+
+    .vi-icon svg {
+      width: 22px; height: 22px;
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1.5;
+    }
+
+    .vi-title {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--w);
+      margin-bottom: 6px;
+    }
+
+    .vi-desc {
+      font-size: .76rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--dim);
+    }
+
+    /* RIGHT column — 2×2 stats grid */
+    .venue-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: rgba(8,11,24,.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(232,229,222,.1);
+    }
+
+    .vs-cell {
+      padding: 32px 28px;
+      border-right: 1px solid rgba(232,229,222,.08);
+      border-bottom: 1px solid rgba(232,229,222,.08);
+    }
+
+    .vs-cell:nth-child(even) { border-right: none; }
+    .vs-cell:nth-child(3),
+    .vs-cell:nth-child(4) { border-bottom: none; }
+
+    .vs-label {
+      font-size: .48rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .vs-value {
+      font-size: clamp(.8rem,1.4vw,1.1rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--w);
+      line-height: 1.25;
+      letter-spacing: .02em;
+    }
+
+    /* ══════════════════════════════════════════
+       LINEUP SECTION
+    ══════════════════════════════════════════ */
+    #lineup {
+      border-top: none;
+      padding: 80px 0 60px;
+    }
+
+    .lineup-head {
+      padding: 0 clamp(20px,5vw,72px);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 8px;
+    }
+
+    .lineup-head .sec-label { color: var(--dim); }
+
+    /* Large faded title behind */
+    .lineup-bg-title {
+      font-size: clamp(4rem,9vw,9rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      line-height: 1;
+      color: rgba(232,229,222,.05);
+      pointer-events: none;
+      user-select: none;
+      margin-top: -.04em;
+    }
+
+    /* Full-width body */
+    .lineup-body { display: block; }
+
+    .lineup-left {
+      padding: 0 clamp(20px,5vw,72px);
+      border-right: none;
+    }
+
+    /* Floating image preview */
+    #artist-preview {
+      position: fixed;
+      top: 0; left: 0;
+      width: 220px;
+      height: 280px;
+      pointer-events: none;
+      z-index: 500;
+      opacity: 0;
+      transition: opacity .1s ease;
+      border: 1px solid rgba(247,162,32,.2);
+      overflow: hidden;
+      will-change: transform;
+    }
+
+    #artist-preview.visible { opacity: 1; }
+
+    .ap-bg { position: absolute; inset: 0; }
+
+    .ap-name {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 40px 16px 16px;
+      background: linear-gradient(to top, rgba(8,11,24,.95), transparent);
+      font-family: var(--f);
+      font-size: .85rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--w);
+    }
+
+    .ap-tag {
+      display: block;
+      font-size: .42rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    /* Day tabs */
+    .day-tabs {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--bdr);
+      margin-top: 32px;
+    }
+
+    .day-tab {
+      background: none;
+      border: none;
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      padding: 12px 40px 12px 0;
+      color: rgba(232,229,222,.28);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      transition: color .25s;
+    }
+
+    .day-tab:hover { color: rgba(232,229,222,.65); }
+    .day-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    .dt-l { font-size: .52rem; letter-spacing: .2em; text-transform: uppercase; }
+    .dt-d { font-size: 1.4rem; font-weight: 700; letter-spacing: .02em; line-height: 1.1; }
+    .dt-s { font-size: .44rem; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+
+    .day-panel { display: none; animation: panIn .35s ease both; }
+    .day-panel.active { display: block; }
+
+    @keyframes panIn {
+      from { opacity: 0; transform: translateY(10px) }
+      to   { opacity: 1; transform: none }
+    }
+
+    /* Act rows */
+    .acts-wrap {
+      margin-top: 32px;
+      border-top: 1px solid var(--bdr);
+    }
+
+    .act-row {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--bdr);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0;
+      transition: background .35s;
+    }
+
+    .act-row::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at -10% 50%, rgba(247,162,32,.1) 0%, transparent 65%);
+      opacity: 0;
+      transition: opacity .45s;
+      pointer-events: none;
+    }
+
+    .act-row:hover::before { opacity: 1; }
+
+    .act-name {
+      font-family: var(--f);
+      text-transform: uppercase;
+      line-height: .92;
+      letter-spacing: -.01em;
+      white-space: nowrap;
+      display: inline-block;
+      transform-origin: left center;
+      transition: transform .22s cubic-bezier(.16,1,.3,1), color .15s ease;
+    }
+
+    .act-tag {
+      font-size: .46rem;
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(232,229,222,.2);
+      text-align: right;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .act-row.t1 { padding-top: clamp(20px,3.5vh,40px); padding-bottom: clamp(20px,3.5vh,40px); }
+    .act-row.t1 .act-name { font-size: clamp(2.2rem,5vw,7rem); font-weight: 900; color: var(--gold); }
+    .act-row.t1:hover .act-name { color: var(--gold2); }
+    .act-row.t1 .act-tag { color: rgba(247,162,32,.35); font-size: .52rem; }
+
+    .act-row.t2 { padding-top: clamp(12px,2vh,22px); padding-bottom: clamp(12px,2vh,22px); }
+    .act-row.t2 .act-name { font-size: clamp(1.4rem,3vw,4rem); font-weight: 700; color: var(--w); }
+    .act-row.t2:hover .act-name { color: var(--gold); }
+
+    .act-row.t3 { padding-top: clamp(8px,1.5vh,16px); padding-bottom: clamp(8px,1.5vh,16px); }
+    .act-row.t3 .act-name { font-size: clamp(.8rem,1.6vw,2rem); font-weight: 500; color: rgba(232,229,222,.35); letter-spacing: .04em; }
+    .act-row.t3:hover .act-name { color: rgba(232,229,222,.65); }
+
+    /* Hover — scale up (GPU, zero reflow) and turn gold */
+    .act-row.t2:hover .act-name { transform: scale(1.18); color: var(--gold) !important; }
+    .act-row.t3:hover .act-name { transform: scale(1.22); color: var(--gold) !important; }
+    .act-row:hover::before { opacity: 1; }
+
+    /* When hovering a non-headliner, dim the headliner */
+    .acts-wrap:has(.act-row.t2:hover) .act-row.t1 .act-name,
+    .acts-wrap:has(.act-row.t3:hover) .act-row.t1 .act-name {
+      color: rgba(247,162,32,.35) !important;
+      transform: scale(0.85);
+    }
+
+    /* Hovering headliner — brighter glow */
+    .act-row.t1:hover .act-name {
+      color: var(--gold2) !important;
+      text-shadow: 0 0 40px rgba(247,162,32,.5), 0 0 80px rgba(247,162,32,.2);
+    }
+
+    .act-sub {
+      display: block;
+      font-family: var(--f);
+      font-size: clamp(.6rem,1.2vw,1.1rem);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--dim2);
+      margin-top: 4px;
+    }
+
+    .act-note {
+      font-size: .5rem;
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(247,162,32,.35);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* VIEW FULL LINEUP button */
+    .lineup-cta-wrap {
+      padding-top: 32px;
+    }
+
+    .btn-outline-sm {
+      display: inline-block;
+      padding: 11px 28px;
+      border: 1px solid rgba(232,229,222,.2);
+      border-radius: 50px;
+      color: var(--dim2);
+      font-size: .65rem;
+      font-weight: 400;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      transition: border-color .2s, color .2s;
+    }
+
+    .btn-outline-sm:hover { border-color: var(--gold); color: var(--gold); }
+
+
+    /* ══════════════════════════════════════════
+       PASSES / TICKETS SECTION
+    ══════════════════════════════════════════ */
+    #tickets {
+      border-top: none;
+      padding: 60px clamp(20px,5vw,72px) 100px;
+    }
+
+    #tickets .sec-label { margin-bottom: 6px; }
+    #tickets .sec-title { margin-bottom: 40px; }
+
+    .passes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .pass-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(232,229,222,.09);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color .25s;
+    }
+
+    .pass-card:hover { border-color: rgba(247,162,32,.3); }
+
+    .pass-emoji { font-size: 1.5rem; margin-bottom: 16px; }
+
+    .pass-type {
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--dim2);
+      margin-bottom: 14px;
+    }
+
+    .pass-price {
+      font-size: clamp(2.5rem,4vw,3.5rem);
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .pass-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+
+    .pass-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .72rem;
+      font-weight: 300;
+      color: var(--dim2);
+      line-height: 1.4;
+    }
+
+    .pass-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .pass-buy {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      border: none;
+      text-align: center;
+      transition: background .2s;
+    }
+
+    .pass-buy:hover { background: var(--gold2); }
+
+    .passes-note {
+      margin-top: 24px;
+      font-size: .5rem;
+      font-weight: 400;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-variant: small-caps;
+      color: var(--dim);
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════════
+       FAQ SECTION
+    ══════════════════════════════════════════ */
+    #faq {
+      border-top: none;
+      padding: 80px clamp(20px,5vw,72px) 100px;
+    }
+
+    /* Left sticky heading + right all FAQs */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 0 80px;
+      align-items: start;
+    }
+
+    .faq-sticky {
+      position: sticky;
+      top: 90px;
+    }
+
+    .faq-sticky .sec-label { margin-bottom: 8px; }
+    .faq-sticky .sec-title { margin-bottom: 0; }
+
+    .faq-questions { display: flex; flex-direction: column; }
+
+    .fq {
+      border-bottom: 1px solid var(--bdr);
+      position: relative;
+    }
+
+    .fq::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 0;
+      background: var(--gold);
+      transition: width .3s cubic-bezier(.16,1,.3,1);
+    }
+
+    .fq:hover::before { width: 2px; }
+
+    /* Question row — flex, no number column */
+    .fq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: clamp(14px,2vh,22px) 8px;
+      background: none;
+      border: none;
+      color: var(--w);
+      text-align: left;
+      font-family: var(--f);
+      font-size: clamp(.8rem,1.4vw,1.1rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      line-height: 1.2;
+      transition: color .2s;
+    }
+
+    .fq-q:hover { color: var(--gold); }
+
+    .fq-icon {
+      font-size: 1.1rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      transition: transform .3s;
+      line-height: 1;
+    }
+
+    .fq.open .fq-icon { transform: rotate(45deg); }
+
+    .fq-a {
+      max-height: 0;
+      overflow: hidden;
+      font-size: clamp(.7rem,1.1vw,.84rem);
+      font-weight: 400;
+      line-height: 1.9;
+      color: rgba(232,229,222,.42);
+      padding-left: 8px;
+      padding-right: 32px;
+      transition: max-height .45s ease, padding-bottom .45s ease;
+    }
+
+    .fq.open .fq-a {
+      max-height: 200px;
+      padding-bottom: 20px;
+    }
+
+    /* VIEW ALL FAQs — sits under last FAQ item */
+    .faq-footer {
+      margin-top: 28px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    /* ══════════════════════════════════════════
+       FINAL CTA
+    ══════════════════════════════════════════ */
+    #cta {
+      position: relative;
+      /* No solid background — wave canvas shows through the transparent center */
+      padding: clamp(80px,12vh,140px) clamp(20px,5vw,72px);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(16px,2.5vh,28px);
+    }
+
+    /* Just a subtle amber glow + grid — no navy fades, waves flow through freely */
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(247,162,32,.07) 0%, transparent 60%),
+        repeating-linear-gradient(90deg,
+          rgba(255,255,255,.013) 0px,
+          rgba(255,255,255,.013) 1px,
+          transparent 1px,
+          transparent 30px);
+    }
+
+    .cta-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: clamp(16px,2.5vh,28px); }
+
+    .cta-tag {
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .cta-headline {
+      font-family: var(--f);
+      font-size: clamp(3rem,8vw,8rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -.01em;
+      line-height: .92;
+      color: var(--w);
+      text-shadow: 0 0 80px rgba(247,162,32,.15), 0 4px 40px rgba(0,0,0,.5);
+    }
+
+    .cta-headline span { color: var(--gold); }
+
+    .cta-meta {
+      font-size: clamp(.6rem,1.2vw,.82rem);
+      font-weight: 400;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--dim2);
+    }
+
+    .cta-divider {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, rgba(247,162,32,.4), transparent);
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .cta-note {
+      font-size: .52rem;
+      font-weight: 400;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    /* Top fade — merges seamlessly with FAQ above */
+    .cta-fade-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, var(--navy), transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    #footer {
+      border-top: none;
+      padding: 72px clamp(20px,5vw,72px) 0;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+      padding-bottom: 56px;
+    }
+
+    /* CENTER — logo + info */
+    .ft-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .ft-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+
+    .ft-brand img {
+      height: 200px;
+      width: auto;
+    }
+
+    .ft-brand-text { display: none; }
+
+    .ft-info {
+      margin-top: 20px;
+      margin-bottom: 0;
+      font-size: .58rem;
+      font-weight: 300;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim);
+      line-height: 1.9;
+    }
+
+    .ft-socials {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 28px;
+      width: 100%;
+    }
+
+    .ft-socials a {
+      color: rgba(232,229,222,.25);
+      transition: color .2s;
+    }
+
+    .ft-socials a:hover { color: var(--gold); }
+
+    .ft-socials svg {
+      width: 17px; height: 17px;
+      fill: currentColor;
+      display: block;
+    }
+
+    /* CENTER col */
+    .ft-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+
+    .ft-center-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .ftc-sunset { font-size: 1.1rem; font-weight: 900; color: var(--w); text-transform: uppercase; }
+    .ftc-port   { font-size: 1.1rem; font-weight: 900; color: var(--gold); text-transform: uppercase; }
+    .ftc-fest   { font-size: .36rem; font-weight: 500; color: var(--w); letter-spacing: .28em; text-transform: uppercase; margin-top: 2px; }
+
+    .ft-center-info {
+      font-size: .52rem;
+      font-weight: 300;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim);
+      line-height: 1.9;
+    }
+
+    /* RIGHT col — nav links + socials (now centered) */
+    .ft-right {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 6px 32px;
+      margin-top: 36px;
+    }
+
+    .ft-right a {
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(232,229,222,.4);
+      transition: color .2s;
+    }
+
+    .ft-right a:hover { color: var(--gold); }
+
+    /* Bottom copyright bar */
+    .ft-copy-bar {
+      border-top: 1px solid var(--bdr);
+      padding: 20px clamp(20px,5vw,72px);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ft-copy {
+      font-size: .52rem;
+      font-weight: 300;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(232,229,222,.22);
+      text-align: center;
+      line-height: 1;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────── */
+    .rev {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .8s cubic-bezier(.25,.1,.25,1),
+                  transform .8s cubic-bezier(.25,.1,.25,1);
+      transition-delay: var(--d, 0ms);
+    }
+
+    .rev.in { opacity: 1; transform: none; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      #nav {
+        padding: 0 20px;
+        overflow: visible;
+      }
+
+      .nav-links-left,
+      .nav-links-right,
+      .nav-cta { display: none !important; }
+
+      .ham { display: flex; }
+
+      /* Mobile: logo horizontally centered, large before scroll */
+      .nav-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        align-self: flex-start;
+        top: 0;
+      }
+
+      .nav-logo img {
+        height: 110px;
+      }
+
+      /* Mobile scrolled — shrink into bar */
+      #nav.on .nav-logo {
+        align-self: flex-start;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      }
+
+      #nav.on .nav-logo img {
+        height: 40px;
+      }
+
+      /* Venue — single column */
+      .venue-grid { grid-template-columns: 1fr; padding: 48px clamp(16px,5vw,40px); }
+      .venue-left { padding-right: 0; margin-bottom: 40px; }
+      .venue-overlay {
+        background: linear-gradient(to bottom,
+          rgba(8,11,24,.92) 0%,
+          rgba(8,11,24,.75) 60%,
+          rgba(8,11,24,.85) 100%);
+      }
+
+      /* Lineup — hide right photo column */
+      .lineup-body { grid-template-columns: 1fr; }
+      .lineup-left { padding: 0 clamp(16px,5vw,40px); }
+
+      /* Passes — single column */
+      .passes-grid { grid-template-columns: 1fr; }
+
+      /* FAQ — single column on mobile, sticky becomes static */
+      .faq-grid { grid-template-columns: 1fr; gap: 40px 0; }
+      .faq-sticky { position: static; }
+
+      /* Footer — single column */
+      .footer-grid { grid-template-columns: 1fr; }
+      .ft-right { align-items: flex-start; }
+      .ft-center { align-items: flex-start; text-align: left; }
+    }
+
+    @media (max-width: 600px) {
+      .hd-num { font-size: clamp(3rem,14vw,5.5rem); }
+      .venue-stats { grid-template-columns: 1fr; }
+      .vs-cell:nth-child(even) { border-right: none; }
+      .vs-cell:nth-child(3) { border-bottom: 1px solid rgba(232,229,222,.08); }
+      .vs-cell:nth-child(4) { border-bottom: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="waveCanvas"></canvas>
+  <div id="cur"></div>
+  <div id="curO"></div>
+
+  <!-- Artist image preview -->
+  <div id="artist-preview">
+    <div class="ap-bg"></div>
+    <div class="ap-name"><span class="ap-tag"></span><span class="ap-label"></span></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       NAV
+  ══════════════════════════════════ -->
+  <nav id="nav">
+
+    <!-- LEFT links -->
+    <ul class="nav-links-left">
+      <li><a href="#lineup">Line Up</a></li>
+      <li><a href="#venue">Venue</a></li>
+      <li><a href="#tickets">Tickets</a></li>
+    </ul>
+
+    <!-- CENTER logo — flex item, NOT absolute -->
+    <a href="#" class="nav-logo">
+      <img src="assets/logo-icon.png" alt="Sunset Port Festival">
+    </a>
+
+    <!-- RIGHT group -->
+    <div class="nav-right">
+      <ul class="nav-links-right">
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+      <a href="https://sunsetfestival.bg" class="nav-cta" target="_blank" rel="noopener">Tickets</a>
+      <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mob" id="mob">
+    <a href="#lineup">Line Up</a>
+    <a href="#venue">Venue</a>
+    <a href="#tickets">Tickets</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://sunsetfestival.bg" target="_blank" rel="noopener">Buy Tickets →</a>
+  </div>
+
+  <!-- ══════════════════════════════════
+       HERO
+  ══════════════════════════════════ -->
+  <section id="hero">
+    <div class="h-photo"></div>
+    <div class="h-glow"></div>
+
+    <div class="h-main">
+      <!-- Tagline (no logo) -->
+      <span class="h-tagline">Live the Moment</span>
+
+      <!-- Dates with vertical divider -->
+      <div class="h-dates">
+        <span class="hd-num">22.08</span>
+        <div class="hd-div"></div>
+        <span class="hd-num">23.08</span>
+      </div>
+
+      <!-- Location -->
+      <div class="h-loc">Pomorie Port &nbsp;·&nbsp; Bulgaria</div>
+
+      <!-- CTAs -->
+      <div class="h-ctas">
+        <a href="#lineup" class="btn-fill">View Lineup</a>
+        <a href="https://sunsetfestival.bg" class="btn-outline" target="_blank" rel="noopener">Get Tickets</a>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="h-cue">
+      <div class="cue-d"></div>
+      <div class="cue-l"></div>
+    </div>
+
+    <!-- Ticker -->
+    <div class="h-ticker">
+      <div class="h-ticker-track" id="tickerTrack"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       VENUE
+  ══════════════════════════════════ -->
+  <section id="venue">
+
+    <div class="venue-grid">
+
+      <!-- LEFT -->
+      <div class="venue-left">
+        <span class="sec-label rev" style="--d:0ms">Venue</span>
+        <div class="sec-title rev" style="--d:40ms">Experience</div>
+
+        <div class="venue-items">
+
+          <div class="venue-item rev" style="--d:80ms">
+            <div class="vi-icon">
+              <!-- Sun icon -->
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg>
+            </div>
+            <div class="vi-text">
+              <div class="vi-title">Sun Sets Directly Behind the Stage</div>
+              <div class="vi-desc">A breathtaking natural observatory every day.</div>
+            </div>
+          </div>
+
+          <div class="venue-item rev" style="--d:110ms">
+            <div class="vi-icon">
+              <!-- Waves icon -->
+              <svg viewBox="0 0 24 24"><path d="M2 12c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/><path d="M2 17c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/><path d="M2 7c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/></svg>
+            </div>
+            <div class="vi-text">
+              <div class="vi-title">Sea on Three Sides</div>
+              <div class="vi-desc">500 Black Sea views and fresh sea breeze all day long.</div>
+            </div>
+          </div>
+
+          <div class="venue-item rev" style="--d:140ms">
+            <div class="vi-icon">
+              <!-- Columns / pillars icon -->
+              <svg viewBox="0 0 24 24"><rect x="4" y="3" width="3" height="18" rx="1"/><rect x="10.5" y="3" width="3" height="18" rx="1"/><rect x="17" y="3" width="3" height="18" rx="1"/><line x1="2" y1="3" x2="22" y2="3"/><line x1="2" y1="21" x2="22" y2="21"/></svg>
+            </div>
+            <div class="vi-text">
+              <div class="vi-title">3,000 Year Old Peninsula</div>
+              <div class="vi-desc">Stepping onto ancient ground where history meets celebration.</div>
+            </div>
+          </div>
+
+          <div class="venue-item rev" style="--d:170ms">
+            <div class="vi-icon">
+              <!-- Diamond / star icon -->
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="vi-text">
+              <div class="vi-title">Boutique by Nature</div>
+              <div class="vi-desc">Limited capacity, intimate vibe. 3,000 unforgettable moments.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT: 2×2 stats -->
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       LINEUP
+  ══════════════════════════════════ -->
+  <section id="lineup">
+
+    <div class="lineup-head">
+      <span class="sec-label rev" style="--d:0ms">Line Up</span>
+      <div class="lineup-bg-title rev" style="--d:30ms">The Artists</div>
+    </div>
+
+    <div class="lineup-body">
+
+      <!-- LEFT: tabs + acts -->
+      <div class="lineup-left">
+
+        <!-- Day tabs -->
+        <div class="day-tabs rev" style="--d:60ms">
+          <button class="day-tab active" data-day="1">
+            <span class="dt-l">Day 1</span>
+            <span class="dt-d">22.08</span>
+            <span class="dt-s">Събота</span>
+          </button>
+          <button class="day-tab" data-day="2">
+            <span class="dt-l">Day 2</span>
+            <span class="dt-d">23.08</span>
+            <span class="dt-s">Неделя</span>
+          </button>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="day-panel active" id="day-1">
+          <div class="acts-wrap">
+
+            <div class="act-row t1">
+              <div>
+                <span class="act-name">Криско</span>
+              </div>
+              <span class="act-tag">Headliner</span>
+            </div>
+
+            <div class="act-row t2">
+              <span class="act-name">Мария Илиева</span>
+              <span class="act-tag">Main Act</span>
+            </div>
+
+            <div class="act-row t2">
+              <span class="act-name">Михаела Филиева</span>
+              <span class="act-tag">Main Act</span>
+            </div>
+
+            <div class="act-row t2">
+              <span class="act-name">Остава</span>
+              <span class="act-tag">Main Act</span>
+            </div>
+
+            <div class="act-row t2">
+              <span class="act-name">Мона</span>
+              <span class="act-tag">Support</span>
+            </div>
+
+            <div class="act-row t3">
+              <span class="act-name">DJ Marti G</span>
+              <span class="act-tag">Support</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day-panel" id="day-2">
+          <div class="acts-wrap">
+
+            <div class="act-row t1">
+              <div>
+                <span class="act-name">Roger Sanchez</span>
+                <span class="act-note">Grammy Award Winner</span>
+              </div>
+              <span class="act-tag">Headliner</span>
+            </div>
+
+            <div class="act-row t2">
+              <span class="act-name">Dimo BG</span>
+              <span class="act-tag">Main Act</span>
+            </div>
+
+            <div class="act-row t2">
+              <span class="act-name">Diass</span>
+              <span class="act-tag">Main Act</span>
+            </div>
+
+            <div class="act-row t3">
+              <span class="act-name">Spirit Grow</span>
+              <span class="act-tag">Support</span>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       PASSES / TICKETS
+  ══════════════════════════════════ -->
+  <section id="tickets">
+    <span class="sec-label rev" style="--d:0ms">Tickets</span>
+    <div class="sec-title rev" style="--d:40ms">Passes</div>
+
+    <div class="passes-grid">
+
+      <div class="pass-card rev" style="--d:80ms">
+        <div class="pass-emoji">🎫</div>
+        <div class="pass-type">Early Bird</div>
+        <div class="pass-price">99€</div>
+        <ul class="pass-features">
+          <li>2 Day Access</li>
+          <li>General Admission</li>
+        </ul>
+        <a href="https://sunsetfestival.bg" class="pass-buy" target="_blank" rel="noopener">Buy Now</a>
+      </div>
+
+      <div class="pass-card rev" style="--d:110ms">
+        <div class="pass-emoji">🎫</div>
+        <div class="pass-type">General</div>
+        <div class="pass-price">129€</div>
+        <ul class="pass-features">
+          <li>2 Day Access</li>
+          <li>General Admission</li>
+        </ul>
+        <a href="https://sunsetfestival.bg" class="pass-buy" target="_blank" rel="noopener">Buy Now</a>
+      </div>
+
+      <div class="pass-card rev" style="--d:140ms">
+        <div class="pass-emoji">🎫</div>
+        <div class="pass-type">VIP</div>
+        <div class="pass-price">199€</div>
+        <ul class="pass-features">
+          <li>2 Day Access</li>
+          <li>VIP Area</li>
+          <li>Dedicated Bar</li>
+          <li>VIP Tokens</li>
+        </ul>
+        <a href="https://sunsetfestival.bg" class="pass-buy" target="_blank" rel="noopener">Buy Now</a>
+      </div>
+
+    </div>
+
+    <p class="passes-note rev" style="--d:160ms">Limited Spaces — Book Your Spot</p>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FAQ
+  ══════════════════════════════════ -->
+  <section id="faq">
+    <div class="faq-grid">
+
+      <!-- LEFT — sticky label + heading -->
+      <div class="faq-sticky">
+        <span class="sec-label rev" style="--d:0ms">FAQ</span>
+        <div class="sec-title rev" style="--d:40ms">Questions</div>
+      </div>
+
+      <!-- RIGHT — all FAQs + button -->
+      <div class="faq-questions">
+
+        <div class="fq rev" style="--d:60ms">
+          <button class="fq-q">
+            <span>When and where?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">22 and 23 August 2026 at Pomorie Port, on Bulgaria's Black Sea coast. Approximately 30 minutes from Bourgas Airport and 20 minutes from Sunny Beach.</div>
+        </div>
+
+        <div class="fq rev" style="--d:80ms">
+          <button class="fq-q">
+            <span>Where do I buy tickets?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">All tickets sold exclusively through sunsetfestival.bg. Single-day passes for Saturday 22.08 or Sunday 23.08, and full weekend passes available.</div>
+        </div>
+
+        <div class="fq rev" style="--d:100ms">
+          <button class="fq-q">
+            <span>How do I get there?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">Pomorie is 30 minutes from Bourgas Airport and 20 minutes from Sunny Beach. Festival shuttles will be announced closer to the event date.</div>
+        </div>
+
+        <div class="fq rev" style="--d:115ms">
+          <button class="fq-q">
+            <span>Accommodation nearby?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">Yes — Pomorie, Sunny Beach and Bourgas all offer a wide range of hotels. August is peak season on the Black Sea, so early booking is strongly recommended.</div>
+        </div>
+
+        <div class="fq rev" style="--d:130ms">
+          <button class="fq-q">
+            <span>Age limit?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">16+ with valid ID. Required for entry and for alcohol purchase at the venue.</div>
+        </div>
+
+        <div class="fq rev" style="--d:145ms">
+          <button class="fq-q">
+            <span>What time do the gates open?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">Gates open at 16:00 on both days. The main programme begins at 18:00 and runs until 00:00. Full schedule will be published closer to the event.</div>
+        </div>
+
+        <div class="fq rev" style="--d:160ms">
+          <button class="fq-q">
+            <span>Is there food and drinks at the venue?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">Yes — a variety of food vendors and bars will be operating throughout both days. The venue is cashless, so please ensure you have a card or set up your wristband wallet on arrival.</div>
+        </div>
+
+        <div class="fq rev" style="--d:175ms">
+          <button class="fq-q">
+            <span>Can I re-enter the festival?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">Yes, re-entry is permitted. Your wristband will be scanned upon exit and re-entry. Please do not remove your wristband as it cannot be replaced.</div>
+        </div>
+
+        <div class="fq rev" style="--d:190ms">
+          <button class="fq-q">
+            <span>What can I bring to the festival?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">You are welcome to bring: valid ID, sunscreen, and a small bag. Strictly prohibited: outside food and drinks, glass bottles, professional cameras, or any items deemed dangerous by security.</div>
+        </div>
+
+        <div class="fq rev" style="--d:205ms">
+          <button class="fq-q">
+            <span>Is the venue accessible?</span>
+            <span class="fq-icon">+</span>
+          </button>
+          <div class="fq-a">Sunset Port Festival is committed to accessibility. Pomorie Port has flat, paved surfaces and accessible facilities. Please contact us in advance so we can ensure you have the best experience.</div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FINAL CTA
+  ══════════════════════════════════ -->
+  <section id="cta">
+    <div class="cta-inner">
+
+      <p class="cta-tag rev" style="--d:0ms">Pomorie Port · Bulgaria</p>
+
+      <h2 class="cta-headline rev" style="--d:80ms">
+        Don't Miss<br>The <span>Sunset</span>
+      </h2>
+
+      <div class="cta-divider rev" style="--d:160ms"></div>
+
+      <p class="cta-meta rev" style="--d:200ms">22 &amp; 23 August 2026 &nbsp;·&nbsp; 3,000 Guests Per Night</p>
+
+      <div class="cta-actions rev" style="--d:260ms">
+        <a href="https://sunsetfestival.bg" target="_blank" rel="noopener" class="btn-fill">Get Tickets</a>
+        <a href="#lineup" class="btn-outline">View Lineup</a>
+      </div>
+
+      <p class="cta-note rev" style="--d:320ms">Limited availability — early bird tickets selling fast</p>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer id="footer">
+    <div class="footer-grid">
+
+      <!-- CENTER — logo + info -->
+      <div class="ft-left">
+        <div class="ft-brand">
+          <img src="assets/logo-icon.png" alt="Sunset Port Festival">
+        </div>
+        <div class="ft-info">
+          22 &amp; 23 August 2026<br>
+          Pomorie Port, Bulgaria
+        </div>
+      </div>
+
+      <!-- RIGHT — nav + socials -->
+      <div class="ft-right">
+        <a href="#lineup">Line Up</a>
+        <a href="#venue">Venue</a>
+        <a href="#tickets">Tickets</a>
+        <a href="#faq">FAQ</a>
+        <a href="#gallery">Gallery</a>
+        <div class="ft-socials">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </a>
+          <a href="#" aria-label="Spotify">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ft-copy-bar">
+      <p class="ft-copy">Sunset Port Festival® · 2026 · All Rights Reserved · Made by <a
+        href="https://www.closefriends.house" target="_blank" rel="noopener"
+        style="color:#F7A220;font-weight:700;text-decoration:none;transition:opacity .2s;"
+        onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">Close.Friends</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // ── PHASE ──────────────────────────────────────────
+    const PH = typeof PHASE !== 'undefined' ? PHASE : 'full';
+    document.body.dataset.phase = PH;
+
+    // ── CURSOR ─────────────────────────────────────────
+    const cur = document.getElementById('cur');
+    const curO = document.getElementById('curO');
+    let mx = 0, my = 0, ox = 0, oy = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+    }, { passive: true });
+    (function loop() {
+      ox += (mx - ox) * .1; oy += (my - oy) * .1;
+      curO.style.left = ox + 'px'; curO.style.top = oy + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cur.classList.add('xl'));
+      el.addEventListener('mouseleave', () => cur.classList.remove('xl'));
+    });
+
+    // ── ANIMATED WAVES ─────────────────────────────────
+    (function initWaves() {
+      const canvas = document.getElementById('waveCanvas');
+      const ctx = canvas.getContext('2d');
+      let t = 0, W, H;
+
+      function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        const numLines = 22;
+        const startY = H * 0.42;
+        const spread = H * 0.52;
+
+        for (let i = 0; i < numLines; i++) {
+          const progress = i / numLines;
+          const y = startY + progress * spread;
+          const amp1 = H * 0.028 * (1 - progress * 0.5);
+          const amp2 = H * 0.014 * (1 - progress * 0.4);
+          const freq1 = 0.0045 + progress * 0.002;
+          const freq2 = 0.0082 + progress * 0.003;
+          const phase1 = t + i * 0.38;
+          const phase2 = t * 1.3 + i * 0.25;
+          const rTop = 140, gTop = 150, bTop = 240;
+          const rBot = 247, gBot = 162, bBot = 32;
+          const mix = Math.pow(progress, 1.5);
+          const r = Math.round(rTop + (rBot - rTop) * mix);
+          const g2 = Math.round(gTop + (gBot - gTop) * mix);
+          const b = Math.round(bTop + (bBot - bTop) * mix);
+          const alpha = 0.018 + progress * 0.038;
+
+          ctx.strokeStyle = `rgba(${r},${g2},${b},${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+
+          for (let x = 0; x <= W; x += 3) {
+            const waveY = y + amp1 * Math.sin(x * freq1 + phase1) + amp2 * Math.sin(x * freq2 + phase2);
+            if (x === 0) ctx.moveTo(x, waveY); else ctx.lineTo(x, waveY);
+          }
+          ctx.stroke();
+        }
+
+        t += 0.004;
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+      draw();
+    })();
+
+    // ── NAV SCROLL ─────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('on', scrollY > 60);
+    }, { passive: true });
+
+    // ── HAMBURGER ──────────────────────────────────────
+    const ham = document.getElementById('ham');
+    const mob = document.getElementById('mob');
+    ham.addEventListener('click', () => {
+      ham.classList.toggle('open');
+      mob.classList.toggle('open');
+      document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+    });
+    mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      ham.classList.remove('open');
+      mob.classList.remove('open');
+      document.body.style.overflow = '';
+    }));
+
+    // ── TICKER ─────────────────────────────────────────
+    (function buildTicker() {
+      const track = document.getElementById('tickerTrack');
+      if (!track) return;
+      const sep = `<span class="sep">•</span>`;
+      const items = [
+        'Sunset Port Festival',
+        sep,
+        '22 &amp; 23 August 2026',
+        sep,
+        'Pomorie Port, Bulgaria',
+        sep,
+        'Black Sea Coast',
+        sep,
+        'Boutique Open-Air Festival',
+        sep,
+      ];
+      const block = `<span class="ti">${items.join('')}</span>`;
+      track.innerHTML = block.repeat(4);
+    })();
+
+    // ── DAY TABS ───────────────────────────────────────
+    document.querySelectorAll('.day-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('day-' + tab.dataset.day).classList.add('active');
+      });
+    });
+
+    // ── SCROLL REVEAL ──────────────────────────────────
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: .07 });
+    document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+    // ── FAQ ACCORDION ──────────────────────────────────
+    document.querySelectorAll('.fq').forEach(item => {
+      item.querySelector('.fq-q').addEventListener('click', () => {
+        const open = item.classList.contains('open');
+        document.querySelectorAll('.fq').forEach(i => i.classList.remove('open'));
+        if (!open) item.classList.add('open');
+      });
+    });
+
+    // ── ARTIST SELECTION + IMAGE PREVIEW ──────────────
+    const preview   = document.getElementById('artist-preview');
+    const previewBg = preview.querySelector('.ap-bg');
+    const previewTag   = preview.querySelector('.ap-tag');
+    const previewLabel = preview.querySelector('.ap-label');
+
+    const artistData = {
+      'Криско':           { tag: 'Headliner · Day 1', bg: 'linear-gradient(135deg,#1a0a2e 0%,#3d1a5c 50%,#0d0818 100%)', img: 'assets/krisko.jpg' },
+      'Мария Илиева':     { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#0d1a2e 0%,#1a3a5c 50%,#080b18 100%)', img: 'assets/maria-ilieva.jpg' },
+      'Михаела Филиева':  { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#1a0d1a 0%,#4a1a4a 50%,#0d080d 100%)', img: 'assets/mihaela-fileva.jpg' },
+      'Остава':           { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#0a1a1a 0%,#0d3a3a 50%,#080b18 100%)', img: 'assets/ostava.jpg', horizontal: true },
+      'Мона':             { tag: 'Support · Day 1',   bg: 'linear-gradient(135deg,#1a1a0a 0%,#2a2a0d 50%,#080b18 100%)', img: 'assets/mona.webp' },
+      'DJ Marti G':       { tag: 'Support · Day 1',   bg: 'linear-gradient(135deg,#0a1a1a 0%,#0d2a2a 50%,#080b18 100%)', img: 'assets/dj-marti-g.jpg' },
+      'Roger Sanchez':    { tag: 'Headliner · Day 2', bg: 'linear-gradient(135deg,#1a0a0a 0%,#5c1a0a 40%,rgba(247,162,32,.15) 70%,#080b18 100%)', img: 'assets/roger-sanchez.jpg' },
+      'Dimo BG':          { tag: 'Main Act · Day 2',  bg: 'linear-gradient(135deg,#0a0d1a 0%,#1a2a4a 50%,#080b18 100%)', img: 'assets/dimo-bg.jpg' },
+      'Diass':            { tag: 'Main Act · Day 2',  bg: 'linear-gradient(135deg,#0d0a1a 0%,#2a1a4a 50%,#080b18 100%)', img: 'assets/diass.jpg' },
+      'Spirit Grow':      { tag: 'Support · Day 2',   bg: 'linear-gradient(135deg,#0a1a0a 0%,#0d2a1a 50%,#080b18 100%)', img: 'assets/spirit-grow.jpg', horizontal: true },
+    };
+
+    // Preload all artist images so switching is instant
+    Object.values(artistData).forEach(d => {
+      if (d.img) { const i = new Image(); i.src = d.img; }
+    });
+
+    // Direct 1:1 cursor follow — zero delay
+    document.addEventListener('mousemove', e => {
+      preview.style.transform = `translate(${e.clientX + 28}px,${e.clientY - 150}px)`;
+    }, { passive: true });
+
+    document.querySelectorAll('.act-row').forEach(row => {
+      const nameEl  = row.querySelector('.act-name');
+      const rawName = nameEl ? nameEl.textContent.trim() : '';
+      const data    = artistData[rawName] || { tag: '', bg: 'linear-gradient(135deg,#0d1025,#080b18)' };
+
+      row.addEventListener('mouseenter', () => {
+        previewBg.style.background = data.img
+          ? `url('${data.img}') center/cover no-repeat`
+          : data.bg;
+        preview.style.width  = data.horizontal ? '340px' : '220px';
+        preview.style.height = data.horizontal ? '200px' : '280px';
+        previewTag.textContent   = data.tag;
+        previewLabel.textContent = rawName;
+        preview.classList.add('visible');
+        preview.classList.remove('clicked');
+      });
+
+      row.addEventListener('mouseleave', () => {
+        preview.classList.remove('visible', 'clicked');
+      });
+
+      row.addEventListener('click', () => {
+        preview.classList.add('clicked');
+        setTimeout(() => preview.classList.remove('clicked'), 300);
+      });
+    });
+  </script>
+</body>
+
+</html>

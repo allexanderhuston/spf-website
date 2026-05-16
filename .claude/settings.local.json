@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p ~/.claude/skills/frontend-design)",
+      "Bash(cp /Users/allexanderhuston/Downloads/SKILL.md ~/.claude/skills/frontend-design/SKILL.md)",
+      "Skill(frontend-design)",
+      "Bash(cp \"/Users/allexanderhuston/Downloads/qKPzip5Q.png\" \"/Users/allexanderhuston/Desktop/SPF Website/assets/logo-full.png\")",
+      "Bash(cp \"/Users/allexanderhuston/Downloads/85XMEMPw.png\" \"/Users/allexanderhuston/Desktop/SPF Website/assets/logo-icon.png\")",
+      "Bash(cp \"/Users/allexanderhuston/Downloads/hf_20260515_110911_14d7aa49-8370-433c-a391-a56482309fe8.png\" \"/Users/allexanderhuston/Desktop/SPF Website/assets/hero-banner.png\")",
+      "Bash(open *)",
+      "mcp__claude_ai_Higgsfield__balance",
+      "mcp__claude_ai_Higgsfield__media_upload",
+      "Bash(curl -X PUT -H \"Content-Type: image/png\" --data-binary @\"/Users/allexanderhuston/Downloads/hf_20260515_110911_14d7aa49-8370-433c-a391-a56482309fe8.png\" 'https://d276s3zg8h21b2.cloudfront.net/user_32sGCBBS7fECIGXDaOFhEJl546R/70addb2d-0dd4-49ed-917e-a44a86708534.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYPNTVMCGYPZMTKFK%2F20260515%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20260515T125522Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=9c52671b9352986cccc40f56fb2a2c0209e543c93c0c8cff6f367e6b853f46a2')",
+      "mcp__claude_ai_Higgsfield__media_confirm",
+      "mcp__claude_ai_Higgsfield__generate_video",
+      "mcp__claude_ai_Higgsfield__job_status",
+      "Bash(curl -L \"https://d8j0ntlcm91z4.cloudfront.net/user_32sGCBBS7fECIGXDaOFhEJl546R/hf_20260515_130447_2b371423-4234-4283-bfb3-3bd82d3debe1.mp4\" -o \"/Users/allexanderhuston/Desktop/SPF Website/assets/hero.mp4\")",
+      "Skill(update-config)",
+      "Bash(rm ~/.claude/skills/motion-framer.md)",
+      "Bash(mkdir ~/.claude/skills/motion-framer)",
+      "Bash(cp \"/Users/allexanderhuston/Downloads/SKILL \\(1\\).md\" ~/.claude/skills/motion-framer/SKILL.md)",
+      "Skill(motion-framer)",
+      "WebFetch(domain:aurafestival.bg)",
+      "Bash(convert --version)"
+    ]
+  }
+}
