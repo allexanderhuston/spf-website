@@ -289,7 +289,7 @@ img { display: block; max-width: 100%; }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* Poster shows instantly via CSS while video loads */
+  isolation: isolate; /* blocks mix-blend-mode:screen from bleeding through */
   background: url('/assets/hero-poster.jpg') center / cover no-repeat var(--navy);
 }
 
