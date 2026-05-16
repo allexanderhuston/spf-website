@@ -44,7 +44,6 @@ export default function SunBackground() {
           width: sunSize, height: sunSize,
           zIndex: 0, pointerEvents: 'none',
           opacity, scale,
-          mixBlendMode: 'screen',
           willChange: 'transform, opacity',
         }}
       >
