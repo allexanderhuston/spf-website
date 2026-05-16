@@ -12,8 +12,7 @@ const TICKER_ITEMS = [
 
 function buildTickerHTML() {
   const sep = `<span class="sep">•</span>`;
-  const inner = TICKER_ITEMS.join(sep);
-  return `<span class="ti">${inner}${sep}</span>`.repeat(4);
+  return `<span class="ti">${TICKER_ITEMS.join(sep)}${sep}</span>`.repeat(4);
 }
 
 export default function Hero() {
@@ -28,21 +27,13 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
-    const isMobile = window.matchMedia('(hover: none)').matches;
-
-    if (isMobile) {
-      // Mobile: autoPlay attr handles playback — nothing to do here
-      return;
-    }
-
-    // Desktop: pause autoplay and switch to scroll-scrub
-    video.pause();
-    video.loop = false;
     const SCROLL_RANGE = window.innerHeight * 0.45;
+    const isMobile = window.matchMedia('(hover: none)').matches;
     let targetTime = 0;
     let rafId: number;
+    let unlocked = false;
 
-    const onReady = () => {
+    const startScrub = () => {
       const duration = video.duration;
       if (!duration) return;
 
@@ -65,12 +56,38 @@ export default function Hero() {
     };
 
     let cleanup: (() => void) | undefined;
-    if (video.readyState >= 1) {
-      cleanup = onReady();
+
+    if (isMobile) {
+      // iOS requires a play() call to unlock seeking — do it on first touch
+      const unlock = () => {
+        if (unlocked) return;
+        unlocked = true;
+        video.play().then(() => {
+          video.pause();
+          video.currentTime = 0;
+          if (video.readyState >= 1) {
+            cleanup = startScrub();
+          } else {
+            video.addEventListener('loadedmetadata', () => { cleanup = startScrub(); }, { once: true });
+          }
+        }).catch(() => {});
+      };
+
+      // Unlock on first touch or scroll
+      document.addEventListener('touchstart', unlock, { once: true, passive: true });
+      document.addEventListener('scroll', unlock, { once: true, passive: true });
     } else {
-      const handler = () => { cleanup = onReady(); };
-      video.addEventListener('loadedmetadata', handler, { once: true });
-      return () => video.removeEventListener('loadedmetadata', handler);
+      // Desktop: pause autoplay and scrub immediately
+      video.pause();
+      video.loop = false;
+
+      if (video.readyState >= 1) {
+        cleanup = startScrub();
+      } else {
+        const handler = () => { cleanup = startScrub(); };
+        video.addEventListener('loadedmetadata', handler, { once: true });
+        return () => video.removeEventListener('loadedmetadata', handler);
+      }
     }
 
     return () => cleanup?.();
@@ -80,7 +97,7 @@ export default function Hero() {
     <section id="hero">
       <video
         ref={videoRef}
-        src="/assets/hero-scrub-sm.mp4"
+        src="/assets/hero-scrub-hq.mp4"
         poster="/assets/hero-poster.jpg"
         muted
         autoPlay
@@ -88,19 +105,14 @@ export default function Hero() {
         playsInline
         preload="auto"
         style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          opacity: 0.68,
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', opacity: 0.68,
           pointerEvents: 'none',
         }}
       />
-
       <div className="h-vignette" />
       <div className="h-glow" />
-
       <div className="h-main">
         <span className="h-tagline">Live the Moment</span>
         <div className="h-dates">
@@ -114,15 +126,8 @@ export default function Hero() {
           <a href="https://sunsetfestival.bg" className="btn-outline" target="_blank" rel="noopener">Get Tickets</a>
         </div>
       </div>
-
-      <div className="h-cue">
-        <div className="cue-d" />
-        <div className="cue-l" />
-      </div>
-
-      <div className="h-ticker">
-        <div className="h-ticker-track" ref={tickerRef} />
-      </div>
+      <div className="h-cue"><div className="cue-d" /><div className="cue-l" /></div>
+      <div className="h-ticker"><div className="h-ticker-track" ref={tickerRef} /></div>
     </section>
   );
 }
