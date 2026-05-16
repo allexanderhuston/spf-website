@@ -298,29 +298,16 @@
     }
 
     /* Background photo */
-    .h-photo {
-      position: absolute;
-      inset: -5%;
-      width: 110%; height: 110%;
-      background: url('assets/hero-banner.png') center 38% / cover no-repeat;
-      opacity: .65;
-      animation: kb 30s ease-in-out alternate infinite;
-      will-change: transform;
-    }
+    /* Hero videos handled via inline styles for crossfade */
 
-    /* Vignette overlay */
-    .h-photo::after {
-      content: '';
+    /* Vignette over the video */
+    .h-vignette {
       position: absolute;
       inset: 0;
+      pointer-events: none;
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(8,11,24,.6) 0%, transparent 60%),
-        linear-gradient(to bottom, rgba(8,11,24,.35) 0%, transparent 40%, transparent 60%, rgba(8,11,24,.6) 100%);
-    }
-
-    @keyframes kb {
-      from { transform: scale(1) translate(0,0); }
-      to   { transform: scale(1.08) translate(-1%,-.5%); }
+        radial-gradient(ellipse at 50% 0%, rgba(8,11,24,.55) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(8,11,24,.3) 0%, transparent 35%, transparent 60%, rgba(8,11,24,.65) 100%);
     }
 
     /* Amber stage glow */
@@ -876,7 +863,8 @@
       white-space: nowrap;
       display: inline-block;
       transform-origin: left center;
-      transition: transform .22s cubic-bezier(.16,1,.3,1), color .15s ease;
+      will-change: transform;
+      transition: transform .18s cubic-bezier(.16,1,.3,1), color .1s ease;
     }
 
     .act-tag {
@@ -892,31 +880,22 @@
 
     .act-row.t1 { padding-top: clamp(20px,3.5vh,40px); padding-bottom: clamp(20px,3.5vh,40px); }
     .act-row.t1 .act-name { font-size: clamp(2.2rem,5vw,7rem); font-weight: 900; color: var(--gold); }
-    .act-row.t1:hover .act-name { color: var(--gold2); }
     .act-row.t1 .act-tag { color: rgba(247,162,32,.35); font-size: .52rem; }
 
     .act-row.t2 { padding-top: clamp(12px,2vh,22px); padding-bottom: clamp(12px,2vh,22px); }
     .act-row.t2 .act-name { font-size: clamp(1.4rem,3vw,4rem); font-weight: 700; color: var(--w); }
-    .act-row.t2:hover .act-name { color: var(--gold); }
 
     .act-row.t3 { padding-top: clamp(8px,1.5vh,16px); padding-bottom: clamp(8px,1.5vh,16px); }
     .act-row.t3 .act-name { font-size: clamp(.8rem,1.6vw,2rem); font-weight: 500; color: rgba(232,229,222,.35); letter-spacing: .04em; }
-    .act-row.t3:hover .act-name { color: rgba(232,229,222,.65); }
 
-    /* Hover — scale up (GPU, zero reflow) and turn gold */
-    .act-row.t2:hover .act-name { transform: scale(1.18); color: var(--gold) !important; }
-    .act-row.t3:hover .act-name { transform: scale(1.22); color: var(--gold) !important; }
-    .act-row:hover::before { opacity: 1; }
-
-    /* When hovering a non-headliner, dim the headliner */
-    .acts-wrap:has(.act-row.t2:hover) .act-row.t1 .act-name,
-    .acts-wrap:has(.act-row.t3:hover) .act-row.t1 .act-name {
-      color: rgba(247,162,32,.35) !important;
-      transform: scale(0.85);
-    }
-
-    /* Hovering headliner — brighter glow */
-    .act-row.t1:hover .act-name {
+    /* JS-driven hover — no :has(), no expensive selector recalc */
+    .act-row.hovered.t2 .act-name { transform: scale(1.18); color: var(--gold) !important; }
+    .act-row.hovered.t3 .act-name { transform: scale(1.22); color: var(--gold) !important; }
+    .act-row.hovered::before { opacity: 1; }
+    /* Dimmed = neutral fade, NOT gold */
+    .act-row.dimmed .act-name { opacity: .22 !important; transform: scale(0.9); color: var(--w) !important; }
+    .act-row.dimmed.t1 .act-name { opacity: .22 !important; color: var(--gold) !important; }
+    .act-row.hovered.t1 .act-name {
       color: var(--gold2) !important;
       text-shadow: 0 0 40px rgba(247,162,32,.5), 0 0 80px rgba(247,162,32,.2);
     }
@@ -1513,7 +1492,7 @@
 
     <!-- CENTER logo — flex item, NOT absolute -->
     <a href="#" class="nav-logo">
-      <img src="assets/logo-icon.png" alt="Sunset Port Festival">
+      <img src="assets/logo-icon.webp" alt="Sunset Port Festival">
     </a>
 
     <!-- RIGHT group -->
@@ -1541,7 +1520,9 @@
        HERO
   ══════════════════════════════════ -->
   <section id="hero">
-    <div class="h-photo"></div>
+    <video id="heroVideo1" src="assets/hero.mp4" muted autoplay playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.68;transition:opacity .8s ease;pointer-events:none;"></video>
+    <video id="heroVideo2" src="assets/hero.mp4" muted playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease;pointer-events:none;"></video>
+    <div class="h-vignette"></div>
     <div class="h-glow"></div>
 
     <div class="h-main">
@@ -1933,7 +1914,7 @@
       <!-- CENTER — logo + info -->
       <div class="ft-left">
         <div class="ft-brand">
-          <img src="assets/logo-icon.png" alt="Sunset Port Festival">
+          <img src="assets/logo-icon.webp" alt="Sunset Port Festival">
         </div>
         <div class="ft-info">
           22 &amp; 23 August 2026<br>
@@ -2048,10 +2029,62 @@
       draw();
     })();
 
+    // ── HERO VIDEO SMOOTH LOOP (crossfade two elements) ─
+    (function smoothLoop() {
+      const v1 = document.getElementById('heroVideo1');
+      const v2 = document.getElementById('heroVideo2');
+      if (!v1 || !v2) return;
+      const FADE = 1.2; // seconds before end to start crossfade
+
+      v1.addEventListener('timeupdate', () => {
+        if (!v1.duration) return;
+        const left = v1.duration - v1.currentTime;
+        if (left <= FADE && v2.paused) {
+          v2.currentTime = 0;
+          v2.play().catch(() => {});
+        }
+        if (left <= FADE) {
+          const t = left / FADE;
+          v1.style.opacity = (t * 0.68).toFixed(3);
+          v2.style.opacity = ((1 - t) * 0.68).toFixed(3);
+        }
+      });
+
+      v1.addEventListener('ended', () => {
+        // v2 is now fully visible — make it the new v1
+        v1.style.opacity = 0;
+        v2.style.opacity = 0.68;
+        // Set up v1 to be the next background
+        v1.currentTime = 0;
+
+        // Swap roles: watch v2 now
+        v2.addEventListener('timeupdate', function handler() {
+          if (!v2.duration) return;
+          const left = v2.duration - v2.currentTime;
+          if (left <= FADE && v1.paused) {
+            v1.currentTime = 0;
+            v1.play().catch(() => {});
+          }
+          if (left <= FADE) {
+            const t = left / FADE;
+            v2.style.opacity = (t * 0.68).toFixed(3);
+            v1.style.opacity = ((1 - t) * 0.68).toFixed(3);
+          }
+        });
+
+        v2.addEventListener('ended', () => {
+          v2.style.opacity = 0;
+          v1.style.opacity = 0.68;
+          v1.play().catch(() => {});
+        }, { once: true });
+      }, { once: true });
+    })();
+
     // ── NAV SCROLL ─────────────────────────────────────
     window.addEventListener('scroll', () => {
       document.getElementById('nav').classList.toggle('on', scrollY > 60);
     }, { passive: true });
+
 
     // ── HAMBURGER ──────────────────────────────────────
     const ham = document.getElementById('ham');
@@ -2120,16 +2153,16 @@
     const previewLabel = preview.querySelector('.ap-label');
 
     const artistData = {
-      'Криско':           { tag: 'Headliner · Day 1', bg: 'linear-gradient(135deg,#1a0a2e 0%,#3d1a5c 50%,#0d0818 100%)', img: 'assets/krisko.jpg' },
-      'Мария Илиева':     { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#0d1a2e 0%,#1a3a5c 50%,#080b18 100%)', img: 'assets/maria-ilieva.jpg' },
-      'Михаела Филиева':  { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#1a0d1a 0%,#4a1a4a 50%,#0d080d 100%)', img: 'assets/mihaela-fileva.jpg' },
-      'Остава':           { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#0a1a1a 0%,#0d3a3a 50%,#080b18 100%)', img: 'assets/ostava.jpg', horizontal: true },
+      'Криско':           { tag: 'Headliner · Day 1', bg: 'linear-gradient(135deg,#1a0a2e 0%,#3d1a5c 50%,#0d0818 100%)', img: 'assets/krisko.webp' },
+      'Мария Илиева':     { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#0d1a2e 0%,#1a3a5c 50%,#080b18 100%)', img: 'assets/maria-ilieva.webp' },
+      'Михаела Филиева':  { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#1a0d1a 0%,#4a1a4a 50%,#0d080d 100%)', img: 'assets/mihaela-fileva.webp' },
+      'Остава':           { tag: 'Main Act · Day 1',  bg: 'linear-gradient(135deg,#0a1a1a 0%,#0d3a3a 50%,#080b18 100%)', img: 'assets/ostava.webp', horizontal: true },
       'Мона':             { tag: 'Support · Day 1',   bg: 'linear-gradient(135deg,#1a1a0a 0%,#2a2a0d 50%,#080b18 100%)', img: 'assets/mona.webp' },
-      'DJ Marti G':       { tag: 'Support · Day 1',   bg: 'linear-gradient(135deg,#0a1a1a 0%,#0d2a2a 50%,#080b18 100%)', img: 'assets/dj-marti-g.jpg' },
-      'Roger Sanchez':    { tag: 'Headliner · Day 2', bg: 'linear-gradient(135deg,#1a0a0a 0%,#5c1a0a 40%,rgba(247,162,32,.15) 70%,#080b18 100%)', img: 'assets/roger-sanchez.jpg' },
-      'Dimo BG':          { tag: 'Main Act · Day 2',  bg: 'linear-gradient(135deg,#0a0d1a 0%,#1a2a4a 50%,#080b18 100%)', img: 'assets/dimo-bg.jpg' },
-      'Diass':            { tag: 'Main Act · Day 2',  bg: 'linear-gradient(135deg,#0d0a1a 0%,#2a1a4a 50%,#080b18 100%)', img: 'assets/diass.jpg' },
-      'Spirit Grow':      { tag: 'Support · Day 2',   bg: 'linear-gradient(135deg,#0a1a0a 0%,#0d2a1a 50%,#080b18 100%)', img: 'assets/spirit-grow.jpg', horizontal: true },
+      'DJ Marti G':       { tag: 'Support · Day 1',   bg: 'linear-gradient(135deg,#0a1a1a 0%,#0d2a2a 50%,#080b18 100%)', img: 'assets/dj-marti-g.webp' },
+      'Roger Sanchez':    { tag: 'Headliner · Day 2', bg: 'linear-gradient(135deg,#1a0a0a 0%,#5c1a0a 40%,rgba(247,162,32,.15) 70%,#080b18 100%)', img: 'assets/roger-sanchez.webp' },
+      'Dimo BG':          { tag: 'Main Act · Day 2',  bg: 'linear-gradient(135deg,#0a0d1a 0%,#1a2a4a 50%,#080b18 100%)', img: 'assets/dimo-bg.webp' },
+      'Diass':            { tag: 'Main Act · Day 2',  bg: 'linear-gradient(135deg,#0d0a1a 0%,#2a1a4a 50%,#080b18 100%)', img: 'assets/diass.webp' },
+      'Spirit Grow':      { tag: 'Support · Day 2',   bg: 'linear-gradient(135deg,#0a1a0a 0%,#0d2a1a 50%,#080b18 100%)', img: 'assets/spirit-grow.webp', horizontal: true },
     };
 
     // Preload all artist images so switching is instant
@@ -2142,30 +2175,40 @@
       preview.style.transform = `translate(${e.clientX + 28}px,${e.clientY - 150}px)`;
     }, { passive: true });
 
-    document.querySelectorAll('.act-row').forEach(row => {
-      const nameEl  = row.querySelector('.act-name');
-      const rawName = nameEl ? nameEl.textContent.trim() : '';
-      const data    = artistData[rawName] || { tag: '', bg: 'linear-gradient(135deg,#0d1025,#080b18)' };
+    document.querySelectorAll('.acts-wrap').forEach(wrap => {
+      const rows = [...wrap.querySelectorAll('.act-row')];
 
-      row.addEventListener('mouseenter', () => {
-        previewBg.style.background = data.img
-          ? `url('${data.img}') center/cover no-repeat`
-          : data.bg;
-        preview.style.width  = data.horizontal ? '340px' : '220px';
-        preview.style.height = data.horizontal ? '200px' : '280px';
-        previewTag.textContent   = data.tag;
-        previewLabel.textContent = rawName;
-        preview.classList.add('visible');
-        preview.classList.remove('clicked');
-      });
+      rows.forEach(row => {
+        const nameEl  = row.querySelector('.act-name');
+        const rawName = nameEl ? nameEl.textContent.trim() : '';
+        const data    = artistData[rawName] || { tag: '', bg: 'linear-gradient(135deg,#0d1025,#080b18)' };
 
-      row.addEventListener('mouseleave', () => {
-        preview.classList.remove('visible', 'clicked');
-      });
+        row.addEventListener('mouseenter', () => {
+          // Apply classes directly — zero CSS recalc cost vs :has()
+          rows.forEach(r => {
+            if (r === row) {
+              r.classList.add('hovered');
+              r.classList.remove('dimmed');
+            } else if (!r.classList.contains('t1') || !row.classList.contains('t1')) {
+              r.classList.remove('hovered');
+              r.classList.add('dimmed');
+            }
+          });
 
-      row.addEventListener('click', () => {
-        preview.classList.add('clicked');
-        setTimeout(() => preview.classList.remove('clicked'), 300);
+          previewBg.style.background = data.img
+            ? `url('${data.img}') center/cover no-repeat`
+            : data.bg;
+          preview.style.width  = data.horizontal ? '340px' : '220px';
+          preview.style.height = data.horizontal ? '200px' : '280px';
+          previewTag.textContent   = data.tag;
+          previewLabel.textContent = rawName;
+          preview.classList.add('visible');
+        });
+
+        row.addEventListener('mouseleave', () => {
+          rows.forEach(r => r.classList.remove('hovered', 'dimmed'));
+          preview.classList.remove('visible');
+        });
       });
     });
   </script>
