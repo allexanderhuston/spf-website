@@ -43,8 +43,8 @@ export default function Lineup() {
     return () => document.removeEventListener('mousemove', onMove);
   }, []);
 
-  // Detect touch device by screen width (reliable across all browsers)
   const isTouchRef = useRef(false);
+  let justTapped = false;
   useEffect(() => {
     const check = () => { isTouchRef.current = window.innerWidth < 1024; };
     check();
@@ -85,18 +85,22 @@ export default function Lineup() {
         // Mobile only: tap toggles preview
         function onTap(e: Event) {
           e.stopPropagation();
+          e.preventDefault();
+          justTapped = true;
+          setTimeout(() => { justTapped = false; }, 400);
           const isActive = row.classList.contains('hovered');
           if (isActive) { deactivate(); } else { activate(); }
         }
 
         if (isTouchRef.current) {
-          row.addEventListener('click', onTap);
+          // Use touchend for instant response — no 300ms click delay
+          row.addEventListener('touchend', onTap);
         }
 
         cleanups.push(() => {
           row.removeEventListener('mouseenter', activate);
           row.removeEventListener('mouseleave', deactivate);
-          row.removeEventListener('click', onTap);
+          row.removeEventListener('touchend', onTap);
         });
       });
     });
@@ -112,8 +116,9 @@ export default function Lineup() {
       document.addEventListener('click', onOutsideClick);
       cleanups.push(() => document.removeEventListener('click', onOutsideClick));
 
-      // Scroll dismisses
+      // Scroll dismisses — but not immediately after a tap
       function onScroll() {
+        if (justTapped) return;
         wrapRefs.current.forEach(wrap => {
           wrap?.querySelectorAll<HTMLElement>('.act-row').forEach(r => r.classList.remove('hovered', 'dimmed'));
         });
@@ -140,7 +145,7 @@ export default function Lineup() {
           height: data?.horizontal ? '200px' : '280px',
           transition: 'opacity 0.08s ease',
         }}
-        className="artist-preview-wrap"
+        className={`artist-preview-wrap${data?.horizontal ? ' horizontal' : ''}`}
       >
         {/* Gradient fallback */}
         <div className="ap-bg" style={{ background: data?.bg ?? '' }} />

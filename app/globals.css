@@ -722,15 +722,21 @@ img { display: block; max-width: 100%; }
   a, button { cursor: auto !important; }
   #cur, #curO { display: none !important; }
 
+  /* Default: portrait (vertical) for most artists */
   #artist-preview {
     top: auto !important;
     left: 50% !important;
     bottom: 24px;
     transform: translateX(-50%) !important;
-    width: 80vw !important;
-    height: 50vw !important;
+    width: 52vw !important;
+    height: 70vw !important;
     pointer-events: auto;
     border-radius: 8px;
+  }
+  /* Horizontal artists (Остава, Spirit Grow) */
+  #artist-preview.horizontal {
+    width: 75vw !important;
+    height: 46vw !important;
   }
 }
 
