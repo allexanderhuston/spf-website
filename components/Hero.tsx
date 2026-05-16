@@ -31,13 +31,13 @@ export default function Hero() {
     const isMobile = window.matchMedia('(hover: none)').matches;
 
     if (isMobile) {
-      // Mobile: just autoplay + loop normally, no scrubbing
-      video.loop = true;
-      video.play().catch(() => {});
+      // Mobile: autoPlay attr handles playback — nothing to do here
       return;
     }
 
-    // Desktop: scroll-scrubbed video
+    // Desktop: pause autoplay and switch to scroll-scrub
+    video.pause();
+    video.loop = false;
     const SCROLL_RANGE = window.innerHeight * 0.45;
     let targetTime = 0;
     let rafId: number;
@@ -83,6 +83,8 @@ export default function Hero() {
         src="/assets/hero-scrub-sm.mp4"
         poster="/assets/hero-poster.jpg"
         muted
+        autoPlay
+        loop
         playsInline
         preload="auto"
         style={{
