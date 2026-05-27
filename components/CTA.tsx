@@ -12,14 +12,13 @@ export default function CTA() {
 
         <div className="cta-divider rev" style={{ ['--d' as string]: '160ms' }}></div>
 
-        <p className="cta-meta rev" style={{ ['--d' as string]: '200ms' }}>22 &amp; 23 August 2026 &nbsp;·&nbsp; 3,000 Guests Per Night</p>
+        <p className="cta-meta rev" style={{ ['--d' as string]: '200ms' }}>22 &amp; 23 August 2026</p>
 
         <div className="cta-actions rev" style={{ ['--d' as string]: '260ms' }}>
           <a href="https://sunsetfestival.bg" target="_blank" rel="noopener" className="btn-fill">Get Tickets</a>
           <a href="#lineup" className="btn-outline">View Lineup</a>
         </div>
 
-        <p className="cta-note rev" style={{ ['--d' as string]: '320ms' }}>Limited availability — early bird tickets selling fast</p>
 
       </div>
     </section>

@@ -1354,6 +1354,7 @@ img { display: block; max-width: 100%; }
 
   .venue-grid { grid-template-columns: 1fr; padding: 48px clamp(16px,5vw,40px); }
   .venue-left { padding-right: 0; margin-bottom: 40px; }
+  .venue-items { grid-template-columns: 1fr; gap: 28px; }
 
   .lineup-body { grid-template-columns: 1fr; }
   .lineup-left { padding: 0 clamp(16px,5vw,40px); }
@@ -1368,6 +1369,11 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 600px) {
+  .venue-items {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
   .pl-poster {
     padding: 0 clamp(16px,5vw,32px) 60px;
     gap: 40px;
