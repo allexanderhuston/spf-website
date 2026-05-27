@@ -56,17 +56,7 @@ export default function Footer() {
       </div>
 
       <div className="ft-copy-bar">
-        <p className="ft-copy">
-          {f.copy}{' '}
-          <a
-            href="https://www.closefriends.house"
-            target="_blank"
-            rel="noopener"
-            style={{ color: '#F7A220', fontWeight: 700, textDecoration: 'none', transition: 'opacity .2s' }}
-          >
-            Close.Friends
-          </a>
-        </p>
+        <p className="ft-copy">{f.copy}</p>
       </div>
     </footer>
   );

@@ -177,7 +177,7 @@ export const t = {
         tickets: 'Tickets',
         faq: 'FAQ',
       },
-      copy: 'Sunset Port Festival® · 2026 · All Rights Reserved · Made by',
+      copy: 'Sunset Port Festival® · 2026 · All Rights Reserved',
     },
   },
 
@@ -357,7 +357,7 @@ export const t = {
         tickets: 'Билети',
         faq: 'ЧЗВ',
       },
-      copy: 'Sunset Port Festival® · 2026 · Всички права запазени · Изработено от',
+      copy: 'Sunset Port Festival® · 2026 · Всички права запазени',
     },
   },
 } as const;
