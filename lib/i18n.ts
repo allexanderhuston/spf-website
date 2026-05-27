@@ -166,6 +166,7 @@ export const t = {
       getTickets: 'Get Tickets',
       viewLineup: 'View Lineup',
       meta: '22 & 23 August 2026',
+      tagline: 'Two nights. One seaside stage. Music, sea views and golden-hour moments at Pomorie Port.',
     },
     footer: {
       info: '22 & 23 August 2026',
@@ -345,6 +346,7 @@ export const t = {
       getTickets: 'Купи Билет',
       viewLineup: 'Виж Лайнъпа',
       meta: '22 и 23 Август 2026',
+      tagline: 'Две нощи. Една крайбрежна сцена. Музика, морски гледки и моменти от златния час на Пристанище Поморие.',
     },
     footer: {
       info: '22 и 23 Август 2026',

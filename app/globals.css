@@ -1218,6 +1218,16 @@ img { display: block; max-width: 100%; }
   color: var(--dim2);
 }
 
+.cta-tagline {
+  font-size: clamp(.8rem, 1.1vw, 1rem);
+  font-weight: 300;
+  color: var(--dim2);
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.7;
+  margin-top: 12px;
+}
+
 .cta-divider {
   width: 1px;
   height: 40px;
