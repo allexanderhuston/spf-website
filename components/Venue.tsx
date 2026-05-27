@@ -23,8 +23,8 @@ export default function Venue() {
                 </svg>
               </div>
               <div className="vi-text">
-                <div className="vi-title">Sun Sets Directly Behind the Stage</div>
-                <div className="vi-desc">A breathtaking natural observatory every day.</div>
+                <div className="vi-title">Sunset Behind the Stage</div>
+                <div className="vi-desc">Watch the day turn into night as the sun drops in front of the stage and the whole festival takes on a golden-hour glow.</div>
               </div>
             </div>
 
@@ -38,7 +38,7 @@ export default function Venue() {
               </div>
               <div className="vi-text">
                 <div className="vi-title">Sea on Three Sides</div>
-                <div className="vi-desc">500 Black Sea views and fresh sea breeze all day long.</div>
+                <div className="vi-desc">Set on Pomorie Port, the venue surrounds you with open views, fresh sea air and the feeling of being surrounded by the Black Sea from every angle.</div>
               </div>
             </div>
 
@@ -53,8 +53,8 @@ export default function Venue() {
                 </svg>
               </div>
               <div className="vi-text">
-                <div className="vi-title">3,000 Year Old Peninsula</div>
-                <div className="vi-desc">Stepping onto ancient ground where history meets celebration.</div>
+                <div className="vi-title">Ancient Seaside Setting</div>
+                <div className="vi-desc">Once known as ancient Anhialo, historic Pomorie connects centuries of Black Sea history with a modern open-air festival experience.</div>
               </div>
             </div>
 
@@ -65,8 +65,8 @@ export default function Venue() {
                 </svg>
               </div>
               <div className="vi-text">
-                <div className="vi-title">Boutique by Nature</div>
-                <div className="vi-desc">Limited capacity, intimate vibe. 3,000 unforgettable moments.</div>
+                <div className="vi-title">Music by the Water</div>
+                <div className="vi-desc">Across two nights, Sunset Port Festival brings together Bulgarian artists, live performances and international house sounds, with food, drinks and surprise moments from sunset into the late hours.</div>
               </div>
             </div>
 

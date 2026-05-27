@@ -42,7 +42,6 @@ export default function Nav() {
         <div className="nav-right">
           <ul className="nav-links-right">
             <li><a href="#faq">FAQ</a></li>
-            <li><a href="#gallery">Gallery</a></li>
           </ul>
           <a href="https://sunsetfestival.bg" className="nav-cta" target="_blank" rel="noopener">Tickets</a>
           <button className={`ham${mobOpen ? ' open' : ''}`} id="ham" aria-label="Menu" onClick={toggleMob}>

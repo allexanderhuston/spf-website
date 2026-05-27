@@ -20,8 +20,8 @@ export default function Home() {
       <Cursor />
       <Nav />
       <Hero />
-      <Venue />
       <Lineup />
+      <Venue />
       <Tickets />
       <FAQ />
       <CTA />

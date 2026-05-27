@@ -104,9 +104,10 @@ export default function Hero() {
           <span className="hd-num">23.08</span>
         </div>
         <div className="h-loc">Pomorie Port &nbsp;·&nbsp; Bulgaria</div>
+        <p className="h-sub">Where the Black Sea, the music and the <span className="h-sub-hl">sunset</span> become one unforgettable open-air festival experience, shaped by <span className="h-sub-hl">Bulgarian artists</span> and <span className="h-sub-hl">international house sounds</span>.</p>
         <div className="h-ctas">
-          <a href="#lineup" className="btn-fill">View Lineup</a>
-          <a href="https://sunsetfestival.bg" className="btn-outline" target="_blank" rel="noopener">Get Tickets</a>
+          <a href="#lineup" className="btn-outline">View Lineup</a>
+          <a href="https://sunsetfestival.bg" className="btn-fill" target="_blank" rel="noopener">Get Tickets</a>
         </div>
       </div>
       <div className="h-cue"><div className="cue-d" /><div className="cue-l" /></div>

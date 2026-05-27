@@ -3,36 +3,107 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface FaqItem { q: string; a: string; }
+interface FaqItem { q: string; a: string | string[]; }
 
 const faqs: FaqItem[] = [
-  { q: 'When and where?', a: "22 and 23 August 2026 at Pomorie Port, on Bulgaria's Black Sea coast. Approximately 30 minutes from Bourgas Airport and 20 minutes from Sunny Beach." },
-  { q: 'Where do I buy tickets?', a: 'All tickets sold exclusively through sunsetfestival.bg. Single-day passes for Saturday 22.08 or Sunday 23.08, and full weekend passes available.' },
-  { q: 'How do I get there?', a: 'Pomorie is 30 minutes from Bourgas Airport and 20 minutes from Sunny Beach. Festival shuttles will be announced closer to the event date.' },
-  { q: 'Accommodation nearby?', a: 'Yes — Pomorie, Sunny Beach and Bourgas all offer a wide range of hotels. August is peak season on the Black Sea, so early booking is strongly recommended.' },
-  { q: 'Age limit?', a: '16+ with valid ID. Required for entry and for alcohol purchase at the venue.' },
-  { q: 'What time do the gates open?', a: 'Gates open at 16:00 on both days. The main programme begins at 18:00 and runs until 00:00. Full schedule will be published closer to the event.' },
-  { q: 'Is there food and drinks at the venue?', a: 'Yes — a variety of food vendors and bars will be operating throughout both days. The venue is cashless, so please ensure you have a card or set up your wristband wallet on arrival.' },
-  { q: 'Can I re-enter the festival?', a: 'Yes, re-entry is permitted. Your wristband will be scanned upon exit and re-entry. Please do not remove your wristband as it cannot be replaced.' },
-  { q: 'What can I bring to the festival?', a: 'You are welcome to bring: valid ID, sunscreen, and a small bag. Strictly prohibited: outside food and drinks, glass bottles, professional cameras, or any items deemed dangerous by security.' },
-  { q: 'Is the venue accessible?', a: 'Sunset Port Festival is committed to accessibility. Pomorie Port has flat, paved surfaces and accessible facilities. Please contact us in advance so we can ensure you have the best experience.' },
+  {
+    q: 'When and where is Sunset Port Festival 2026?',
+    a: "Sunset Port Festival takes place on 22 and 23 August 2026 at Pomorie Port, on Bulgaria's Black Sea coast. Pomorie is approximately 30 minutes from Burgas Airport and around 20 minutes from Sunny Beach.",
+  },
+  {
+    q: 'Where can I buy tickets?',
+    a: [
+      'Tickets are sold through the official Sunset Port Festival website and Eventim. Once ticket sales are live, you will be able to choose between single-day tickets for Saturday 22.08 or Sunday 23.08, as well as full weekend passes.',
+      'To avoid ticket scams, only buy from official ticket channels.',
+    ],
+  },
+  {
+    q: 'What ticket types will be available?',
+    a: 'Sunset Port Festival will offer Day 1 tickets, Day 2 tickets and weekend passes. Day tickets give access to one festival day only, while weekend passes give access to both nights at Pomorie Port.',
+  },
+  {
+    q: 'How do I get to Pomorie Port?',
+    a: [
+      "Pomorie is easy to reach from key locations on Bulgaria's Black Sea coast. The town is approximately 30 minutes from Burgas Airport, around 20 minutes from Sunny Beach, and within easy reach of Burgas by car, taxi or organised transport.",
+      'Festival shuttle and transport details will be announced closer to the event.',
+    ],
+  },
+  {
+    q: 'Is there parking at the venue?',
+    a: 'Parking and shuttle information will be announced before the festival. Because August is peak season on the Black Sea coast, we recommend planning your journey in advance and following the official Sunset Port Festival channels for updates.',
+  },
+  {
+    q: 'Where should I stay?',
+    a: [
+      'Pomorie, Sunny Beach and Burgas all offer a wide range of hotels and accommodation options. August is a busy period on the Black Sea coast, so early booking is strongly recommended.',
+      'Recommended partner hotels for Sunset Port Festival guests will be announced soon.',
+    ],
+  },
+  {
+    q: 'What is the age limit?',
+    a: [
+      'Day 1, Saturday 22.08, is open to guests aged 16+. Guests aged 16–17 must be accompanied by a responsible adult throughout the event. If the accompanying adult is not the guest\'s parent or legal guardian, a notarised parental consent declaration must be presented upon entry.',
+      'Day 2, Sunday 23.08, is strictly 18+ with valid ID. ID checks will take place at the entrance and at all bars.',
+    ],
+  },
+  {
+    q: 'What time do the gates open?',
+    a: 'Gates open at 17:00 on both festival days. The event runs from sunset into the late hours, with music, food, drinks and surprise moments throughout the evening.',
+  },
+  {
+    q: 'Will there be food and drinks?',
+    a: 'Yes. Food vendors and bars will be available at the venue throughout both festival days. Visitors can expect food, drinks and festival extras designed to complement the open-air experience at Pomorie Port.',
+  },
+  {
+    q: 'Can I pay by card?',
+    a: 'Yes. Bars and food vendors at the festival will accept both cash and card payments.',
+  },
+  {
+    q: 'Can I leave and re-enter the festival?',
+    a: 'No. Re-entry is not permitted once you leave the festival venue. Please make sure you have everything you need before entering Pomorie Port.',
+  },
+  {
+    q: 'What should I bring?',
+    a: [
+      'Bring a valid ID, your ticket, a bank card or cash, sunscreen, and a light jacket or layer for the evening. Small personal bags are allowed.',
+      'Do not bring outside food or drinks, glass bottles, alcohol, professional cameras without accreditation, drones, fireworks, flares, weapons, illegal substances, large umbrellas, chairs, stools or any item that may be considered unsafe by security.',
+    ],
+  },
+  {
+    q: 'What happens if it rains?',
+    a: [
+      'Sunset Port Festival is an outdoor event and is planned to go ahead in normal weather conditions. We recommend bringing a light waterproof layer just in case.',
+      "If extreme weather or circumstances beyond the organiser's control affect the event, updates will be shared through the official website and social media channels.",
+    ],
+  },
+  {
+    q: 'Are tickets refundable or transferable?',
+    a: [
+      'Tickets should only be purchased through official channels. Do not buy tickets from unofficial resellers.',
+      "Refunds are usually handled through the ticketing partner only when the organiser authorises them. Eventim's terms state that ticket refunds are carried out only when the organiser assigns Eventim to process the refund under the organiser's conditions.",
+    ],
+  },
+  {
+    q: 'Is the venue accessible?',
+    a: 'Pomorie Port has flat, paved areas and accessible facilities. If you have specific accessibility requirements, contact the festival team before the event so they can help you plan the best possible experience.',
+  },
+  {
+    q: 'Will the full schedule and set times be announced?',
+    a: 'Yes. The full programme, artist schedule and set times will be announced closer to the festival. Follow the official Sunset Port Festival channels for lineup updates, transport details and ticket announcements.',
+  },
 ];
 
 function FaqItem({ item, index, isOpen, onToggle }: {
   item: FaqItem; index: number; isOpen: boolean; onToggle: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  // Always visible — don't rely on IntersectionObserver (breaks with Lenis on mobile)
-  const visible = true;
 
-  // Called when Framer Motion finishes the expand animation
   function onExpandComplete() {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const viewH = window.innerHeight;
     if (rect.bottom > viewH - 20) {
-      // Use Lenis so the scroll easing matches the page scroll exactly
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const lenis = (window as any).lenis;
       if (lenis) {
@@ -43,13 +114,14 @@ function FaqItem({ item, index, isOpen, onToggle }: {
     }
   }
 
+  const paragraphs = Array.isArray(item.a) ? item.a : [item.a];
+
   return (
     <div
       ref={ref}
-      className={['fq', visible ? 'in' : '', isOpen ? 'open' : ''].filter(Boolean).join(' ')}
+      className={['fq', 'in', isOpen ? 'open' : ''].filter(Boolean).join(' ')}
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'none' : 'translateY(16px)',
+        opacity: 1,
         transition: `opacity .8s ease ${index * 15}ms, transform .8s ease ${index * 15}ms`,
       }}
     >
@@ -73,9 +145,13 @@ function FaqItem({ item, index, isOpen, onToggle }: {
             style={{ overflow: 'hidden' }}
             onAnimationComplete={onExpandComplete}
           >
-            <p className="fq-a" style={{ maxHeight: 'none', paddingBottom: 20 }}>
-              {item.a}
-            </p>
+            <div style={{ paddingBottom: 20 }}>
+              {paragraphs.map((p, i) => (
+                <p key={i} className="fq-a" style={{ maxHeight: 'none', paddingBottom: i < paragraphs.length - 1 ? 10 : 0 }}>
+                  {p}
+                </p>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -85,24 +161,17 @@ function FaqItem({ item, index, isOpen, onToggle }: {
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
 
   return (
     <section id="faq">
-
-      {/* Title — full width above questions */}
-      <div
-        ref={headingRef}
-        style={{
-          padding: '0 clamp(20px,5vw,72px)',
-          marginBottom: 40,
-        }}
-      >
+      <div style={{ padding: '0 clamp(20px,5vw,72px)', marginBottom: 40 }}>
         <span className="sec-label">FAQ</span>
         <div className="sec-title">Questions</div>
+        <p className="faq-intro">
+          Everything you need to know before visiting Sunset Port Festival 2026 at Pomorie Port, including tickets, travel, accommodation, age limits, entry rules, food and drinks, payment options and accessibility.
+        </p>
       </div>
 
-      {/* Questions — full width below */}
       <div className="faq-questions">
         {faqs.map((item, i) => (
           <FaqItem
