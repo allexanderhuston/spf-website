@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useLang } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
 
 interface ArtistData {
   tag: string;
@@ -52,6 +54,8 @@ export default function Lineup() {
     setPreviewVisible(false);
   }
 
+  const { lang } = useLang();
+  const l = t[lang].lineup;
   const data = activeArtist ? (artistData[activeArtist] ?? null) : null;
 
   function renderDay(
@@ -119,17 +123,17 @@ export default function Lineup() {
 
       <section id="lineup">
         <div className="lineup-head">
-          <span className="sec-label">Line Up</span>
-          <div className="lineup-bg-title">The Artists</div>
+          <span className="sec-label">{l.label}</span>
+          <div className="lineup-bg-title">{l.title}</div>
         </div>
 
         <div className="pl-poster">
 
           <div className="pl-poster-block">
             <div className="pl-poster-meta">
-              <span className="pl-poster-date">22.08</span>
+              <span className="pl-poster-date">{l.day1.date}</span>
               <span className="pl-poster-rule" />
-              <span className="pl-poster-day">Събота</span>
+              <span className="pl-poster-day">{l.day1.name}</span>
             </div>
             <p className="pl-poster-names">
               {renderDay(day1, { hideDesktop: [2], hideMobile: [1, 2, 4] })}
@@ -138,9 +142,9 @@ export default function Lineup() {
 
           <div className="pl-poster-block">
             <div className="pl-poster-meta">
-              <span className="pl-poster-date">23.08</span>
+              <span className="pl-poster-date">{l.day2.date}</span>
               <span className="pl-poster-rule" />
-              <span className="pl-poster-day">Неделя</span>
+              <span className="pl-poster-day">{l.day2.name}</span>
             </div>
             <div className="pl-day2-acts">
               <p className="pl-poster-names">

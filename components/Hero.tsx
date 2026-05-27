@@ -1,22 +1,21 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-
-const TICKER_ITEMS = [
-  'Sunset Port Festival', '22 & 23 August 2026',
-  'Pomorie Port, Bulgaria', 'Black Sea Coast', 'Boutique Open-Air Festival',
-];
+import { useLang } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const tickerRef = useRef<HTMLDivElement>(null);
+  const { lang } = useLang();
+  const h = t[lang].hero;
 
   useEffect(() => {
     if (!tickerRef.current) return;
     const sep = `<span class="sep">•</span>`;
     tickerRef.current.innerHTML =
-      `<span class="ti">${TICKER_ITEMS.join(sep)}${sep}</span>`.repeat(4);
-  }, []);
+      `<span class="ti">${h.ticker.join(sep)}${sep}</span>`.repeat(4);
+  }, [lang]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -97,17 +96,21 @@ export default function Hero() {
       <div className="h-vignette" />
       <div className="h-glow" />
       <div className="h-main">
-        <span className="h-tagline">Live the Moment</span>
+        <span className="h-tagline">{h.tagline}</span>
         <div className="h-dates">
           <span className="hd-num">22.08</span>
           <div className="hd-div" />
           <span className="hd-num">23.08</span>
         </div>
-        <div className="h-loc">Pomorie Port &nbsp;·&nbsp; Bulgaria</div>
-        <p className="h-sub">Where the Black Sea, the music and the <span className="h-sub-hl">sunset</span> become one unforgettable open-air festival experience, shaped by <span className="h-sub-hl">Bulgarian artists</span> and <span className="h-sub-hl">international house sounds</span>.</p>
+        <div className="h-loc">{h.location}</div>
+        <p className="h-sub">
+          {h.sub.p1}<span className="h-sub-hl">{h.sub.hl1}</span>
+          {h.sub.p2}<span className="h-sub-hl">{h.sub.hl2}</span>
+          {h.sub.p3}<span className="h-sub-hl">{h.sub.hl3}</span>{h.sub.p4}
+        </p>
         <div className="h-ctas">
-          <a href="#lineup" className="btn-outline">View Lineup</a>
-          <a href="https://sunsetfestival.bg" className="btn-fill" target="_blank" rel="noopener">Get Tickets</a>
+          <a href="#lineup" className="btn-outline">{h.viewLineup}</a>
+          <a href="https://sunsetfestival.bg" className="btn-fill" target="_blank" rel="noopener">{h.getTickets}</a>
         </div>
       </div>
       <div className="h-cue"><div className="cue-d" /><div className="cue-l" /></div>

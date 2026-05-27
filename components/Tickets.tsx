@@ -1,8 +1,14 @@
+'use client';
+import { useLang } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
+
 export default function Tickets() {
+  const { lang } = useLang();
+  const tk = t[lang].tickets;
   return (
     <section id="tickets">
-      <span className="sec-label rev" style={{ ['--d' as string]: '0ms' }}>Tickets</span>
-      <div className="sec-title rev" style={{ ['--d' as string]: '40ms' }}>Passes</div>
+      <span className="sec-label rev" style={{ ['--d' as string]: '0ms' }}>{tk.label}</span>
+      <div className="sec-title rev" style={{ ['--d' as string]: '40ms' }}>{tk.title}</div>
 
       {/* iFrame placeholder — replace src with ticket provider URL when ready */}
       <div
@@ -29,7 +35,7 @@ export default function Tickets() {
           textTransform: 'uppercase',
           color: 'rgba(232,229,222,.2)',
         }}>
-          Ticket checkout — coming soon
+          {tk.comingSoon}
         </p>
       </div>
 

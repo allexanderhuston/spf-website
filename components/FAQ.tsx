@@ -2,8 +2,10 @@
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLang } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
 
-interface FaqItem { q: string; a: string | string[]; }
+interface FaqItem { q: string; a: string | readonly string[]; }
 
 const faqs: FaqItem[] = [
   {
@@ -161,21 +163,21 @@ function FaqItem({ item, index, isOpen, onToggle }: {
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { lang } = useLang();
+  const f = t[lang].faq;
 
   return (
     <section id="faq">
       <div style={{ padding: '0 clamp(20px,5vw,72px)', marginBottom: 40 }}>
-        <span className="sec-label">FAQ</span>
-        <div className="sec-title">Questions</div>
-        <p className="faq-intro">
-          Everything you need to know before visiting Sunset Port Festival 2026 at Pomorie Port, including tickets, travel, accommodation, age limits, entry rules, food and drinks, payment options and accessibility.
-        </p>
+        <span className="sec-label">{f.label}</span>
+        <div className="sec-title">{f.title}</div>
+        <p className="faq-intro">{f.intro}</p>
       </div>
 
       <div className="faq-questions">
-        {faqs.map((item, i) => (
+        {f.items.map((item, i) => (
           <FaqItem
-            key={i}
+            key={`${lang}-${i}`}
             item={item}
             index={i}
             isOpen={openIndex === i}

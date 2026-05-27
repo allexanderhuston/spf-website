@@ -229,6 +229,46 @@ img { display: block; max-width: 100%; }
 
 .nav-cta:hover { border-color: var(--gold); color: var(--gold); }
 
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lang-switch button {
+  background: none;
+  border: none;
+  font-family: var(--f);
+  font-size: .44rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(232,229,222,.35);
+  cursor: pointer;
+  padding: 4px 2px;
+  transition: color .2s;
+}
+
+.lang-switch button.active { color: var(--gold); }
+.lang-switch button:hover { color: rgba(232,229,222,.8); }
+
+.lang-div {
+  font-size: .4rem;
+  color: rgba(232,229,222,.2);
+  font-weight: 300;
+}
+
+/* In mobile menu — bigger */
+.mob .lang-switch {
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.mob .lang-switch button {
+  font-size: .7rem;
+  padding: 6px 4px;
+}
+
 .ham {
   display: none;
   flex-direction: column;

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 export const metadata: Metadata = {
   title: "Sunset Port Festival — 22 & 23 August 2026 · Pomorie Port",
@@ -23,8 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" href="/assets/sun.png" as="image" />
       </head>
       <body>
-        <SmoothScroll />
-        {children}
+        <LanguageProvider>
+          <SmoothScroll />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

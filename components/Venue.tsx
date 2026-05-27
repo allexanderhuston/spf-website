@@ -1,10 +1,16 @@
+'use client';
+import { useLang } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
+
 export default function Venue() {
+  const { lang } = useLang();
+  const v = t[lang].venue;
   return (
     <section id="venue">
       <div className="venue-grid">
         <div className="venue-left">
-          <span className="sec-label rev" style={{ ['--d' as string]: '0ms' }}>Venue</span>
-          <div className="sec-title rev" style={{ ['--d' as string]: '40ms' }}>Experience</div>
+          <span className="sec-label rev" style={{ ['--d' as string]: '0ms' }}>{v.label}</span>
+          <div className="sec-title rev" style={{ ['--d' as string]: '40ms' }}>{v.title}</div>
 
           <div className="venue-items">
 
@@ -23,8 +29,8 @@ export default function Venue() {
                 </svg>
               </div>
               <div className="vi-text">
-                <div className="vi-title">Sunset Behind the Stage</div>
-                <div className="vi-desc">Watch the day turn into night as the sun drops in front of the stage and the whole festival takes on a golden-hour glow.</div>
+                <div className="vi-title">{v.items[0].title}</div>
+                <div className="vi-desc">{v.items[0].desc}</div>
               </div>
             </div>
 
@@ -37,8 +43,8 @@ export default function Venue() {
                 </svg>
               </div>
               <div className="vi-text">
-                <div className="vi-title">Sea on Three Sides</div>
-                <div className="vi-desc">Set on Pomorie Port, the venue surrounds you with open views, fresh sea air and the feeling of being surrounded by the Black Sea from every angle.</div>
+                <div className="vi-title">{v.items[1].title}</div>
+                <div className="vi-desc">{v.items[1].desc}</div>
               </div>
             </div>
 
@@ -53,8 +59,8 @@ export default function Venue() {
                 </svg>
               </div>
               <div className="vi-text">
-                <div className="vi-title">Ancient Seaside Setting</div>
-                <div className="vi-desc">Once known as ancient Anhialo, historic Pomorie connects centuries of Black Sea history with a modern open-air festival experience.</div>
+                <div className="vi-title">{v.items[2].title}</div>
+                <div className="vi-desc">{v.items[2].desc}</div>
               </div>
             </div>
 
@@ -65,8 +71,8 @@ export default function Venue() {
                 </svg>
               </div>
               <div className="vi-text">
-                <div className="vi-title">Music by the Water</div>
-                <div className="vi-desc">Across two nights, Sunset Port Festival brings together Bulgarian artists, live performances and international house sounds, with food, drinks and surprise moments from sunset into the late hours.</div>
+                <div className="vi-title">{v.items[3].title}</div>
+                <div className="vi-desc">{v.items[3].desc}</div>
               </div>
             </div>
 

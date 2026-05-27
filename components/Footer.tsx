@@ -1,6 +1,11 @@
+'use client';
 import Image from 'next/image';
+import { useLang } from '@/contexts/LanguageContext';
+import { t } from '@/lib/i18n';
 
 export default function Footer() {
+  const { lang } = useLang();
+  const f = t[lang].footer;
   return (
     <footer id="footer">
       <div className="footer-grid">
@@ -10,17 +15,15 @@ export default function Footer() {
             <Image src="/assets/logo-icon.webp" alt="Sunset Port Festival" width={200} height={200} />
           </div>
           <div className="ft-info">
-            22 &amp; 23 August 2026<br />
-            Pomorie Port, Bulgaria
+            {f.info}<br />{f.location}
           </div>
         </div>
 
         <div className="ft-right">
-          <a href="#lineup">Line Up</a>
-          <a href="#venue">Venue</a>
-          <a href="#tickets">Tickets</a>
-          <a href="#faq">FAQ</a>
-          <a href="#gallery">Gallery</a>
+          <a href="#lineup">{f.links.lineup}</a>
+          <a href="#venue">{f.links.venue}</a>
+          <a href="#tickets">{f.links.tickets}</a>
+          <a href="#faq">{f.links.faq}</a>
           <div className="ft-socials">
             <a href="https://www.instagram.com/bonchevevents/" target="_blank" rel="noopener" aria-label="Instagram">
               <svg viewBox="0 0 24 24">
@@ -54,7 +57,7 @@ export default function Footer() {
 
       <div className="ft-copy-bar">
         <p className="ft-copy">
-          Sunset Port Festival® · 2026 · All Rights Reserved · Made by{' '}
+          {f.copy}{' '}
           <a
             href="https://www.closefriends.house"
             target="_blank"
