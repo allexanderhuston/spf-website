@@ -202,7 +202,7 @@ img { display: block; max-width: 100%; }
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 0;
+  gap: 24px;
 }
 
 .nav-links-right {
@@ -232,42 +232,59 @@ img { display: block; max-width: 100%; }
 .lang-switch {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 9px;
 }
 
-.lang-switch button {
-  background: none;
-  border: none;
+.lang-label {
   font-family: var(--f);
   font-size: .44rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: rgba(232,229,222,.35);
+  color: rgba(232,229,222,.28);
+  transition: color .25s;
+  user-select: none;
+}
+
+.lang-label.active { color: var(--gold); }
+
+.lang-track {
+  width: 44px;
+  height: 26px;
+  background: rgba(255,255,255,.08);
+  border-radius: 13px;
+  position: relative;
   cursor: pointer;
-  padding: 4px 2px;
-  transition: color .2s;
+  transition: background .3s;
+  border: 1px solid rgba(255,255,255,.25);
+  flex-shrink: 0;
 }
 
-.lang-switch button.active { color: var(--gold); }
-.lang-switch button:hover { color: rgba(232,229,222,.8); }
-
-.lang-div {
-  font-size: .4rem;
-  color: rgba(232,229,222,.2);
-  font-weight: 300;
+.lang-track[aria-checked="true"] {
+  background: var(--gold);
+  border-color: var(--gold);
 }
 
-/* In mobile menu — bigger */
-.mob .lang-switch {
-  justify-content: center;
-  margin: 8px 0;
+.lang-thumb {
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 2px 6px rgba(0,0,0,.5);
 }
 
-.mob .lang-switch button {
-  font-size: .7rem;
-  padding: 6px 4px;
-}
+.lang-thumb.on { transform: translateX(18px); }
+
+/* Mobile menu */
+.mob .lang-switch { gap: 11px; }
+.mob .lang-label { font-size: .6rem; }
+.mob .lang-track { width: 50px; height: 28px; border-radius: 14px; }
+.mob .lang-thumb { width: 22px; height: 22px; top: 2px; }
+.mob .lang-thumb.on { transform: translateX(22px); }
 
 .ham {
   display: none;

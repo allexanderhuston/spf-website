@@ -5,17 +5,17 @@ import { useLang } from '@/contexts/LanguageContext';
 export default function LanguageSwitcher() {
   const { lang, setLang } = useLang();
 
+  function toggle() {
+    setLang(lang === 'en' ? 'bg' : 'en');
+  }
+
   return (
     <div className="lang-switch">
-      <button
-        className={lang === 'en' ? 'active' : ''}
-        onClick={() => setLang('en')}
-      >EN</button>
-      <span className="lang-div">/</span>
-      <button
-        className={lang === 'bg' ? 'active' : ''}
-        onClick={() => setLang('bg')}
-      >BG</button>
+      <span className={`lang-label${lang === 'en' ? ' active' : ''}`}>EN</span>
+      <div className="lang-track" onClick={toggle} role="switch" aria-checked={lang === 'bg'}>
+        <div className={`lang-thumb${lang === 'bg' ? ' on' : ''}`} />
+      </div>
+      <span className={`lang-label${lang === 'bg' ? ' active' : ''}`}>BG</span>
     </div>
   );
 }

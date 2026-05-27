@@ -46,10 +46,10 @@ export default function Nav() {
         </a>
 
         <div className="nav-right">
+          <LanguageSwitcher />
           <ul className="nav-links-right">
             <li><a href="#faq">{n.faq}</a></li>
           </ul>
-          <LanguageSwitcher />
           <a href="https://sunsetfestival.bg" className="nav-cta" target="_blank" rel="noopener">{n.cta}</a>
           <button className={`ham${mobOpen ? ' open' : ''}`} id="ham" aria-label="Menu" onClick={toggleMob}>
             <span></span>
