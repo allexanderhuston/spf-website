@@ -48,7 +48,7 @@ export default function SunBackground() {
           willChange: 'transform, opacity',
         }}
       >
-        <Image src="/assets/sun.png" alt="" fill style={{ objectFit: 'contain' }} priority />
+        <Image src="/assets/sun.png" alt="" fill sizes="100vw" style={{ objectFit: 'contain' }} priority />
       </motion.div>
     </>
   );

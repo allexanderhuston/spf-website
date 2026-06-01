@@ -12,9 +12,16 @@ export default function LanguageSwitcher() {
   return (
     <div className="lang-switch">
       <span className={`lang-label${lang === 'en' ? ' active' : ''}`}>EN</span>
-      <div className="lang-track" onClick={toggle} role="switch" aria-checked={lang === 'bg'}>
+      <button
+        className="lang-track"
+        onClick={toggle}
+        onTouchEnd={(e) => { e.preventDefault(); toggle(); }}
+        role="switch"
+        aria-checked={lang === 'bg'}
+        aria-label="Toggle language"
+      >
         <div className={`lang-thumb${lang === 'bg' ? ' on' : ''}`} />
-      </div>
+      </button>
       <span className={`lang-label${lang === 'bg' ? ' active' : ''}`}>BG</span>
     </div>
   );

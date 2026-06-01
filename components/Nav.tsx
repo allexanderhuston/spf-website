@@ -46,11 +46,13 @@ export default function Nav() {
         </a>
 
         <div className="nav-right">
-          <LanguageSwitcher />
+          <div className="nav-lang-desktop">
+            <LanguageSwitcher />
+          </div>
           <ul className="nav-links-right">
             <li><a href="#faq">{n.faq}</a></li>
           </ul>
-          <a href="https://sunsetfestival.bg" className="nav-cta" target="_blank" rel="noopener">{n.cta}</a>
+          <a href="https://www.eventim.bg/top-events/?affiliate=B9G" className="nav-cta" target="_blank" rel="noopener">{n.cta}</a>
           <button className={`ham${mobOpen ? ' open' : ''}`} id="ham" aria-label="Menu" onClick={toggleMob}>
             <span></span>
             <span></span>
@@ -65,7 +67,7 @@ export default function Nav() {
         <a href="#tickets" onClick={closeMob}>{n.tickets}</a>
         <a href="#faq" onClick={closeMob}>{n.faq}</a>
         <LanguageSwitcher />
-        <a href="https://sunsetfestival.bg" target="_blank" rel="noopener" onClick={closeMob}>{n.buyTickets}</a>
+        <a href="https://www.eventim.bg/top-events/?affiliate=B9G" target="_blank" rel="noopener" onClick={closeMob} className="mob-cta">{n.buyTickets}</a>
       </div>
     </>
   );

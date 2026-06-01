@@ -23,7 +23,7 @@ export default function CTA() {
         <p className="cta-tagline rev" style={{ ['--d' as string]: '230ms' }}>{c.tagline}</p>
 
         <div className="cta-actions rev" style={{ ['--d' as string]: '290ms' }}>
-          <a href="https://sunsetfestival.bg" target="_blank" rel="noopener" className="btn-fill">{c.getTickets}</a>
+          <a href="https://www.eventim.bg/top-events/?affiliate=B9G" target="_blank" rel="noopener" className="btn-fill">{c.getTickets}</a>
           <a href="#lineup" className="btn-outline">{c.viewLineup}</a>
         </div>
 

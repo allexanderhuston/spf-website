@@ -57,6 +57,12 @@ export default function Footer() {
 
       <div className="ft-copy-bar">
         <p className="ft-copy">{f.copy}</p>
+        <a href="/terms" className="ft-copy" style={{ marginLeft: '24px', opacity: .6, transition: 'opacity .2s' }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '.6')}
+        >
+          Terms &amp; Conditions
+        </a>
       </div>
     </footer>
   );

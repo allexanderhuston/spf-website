@@ -15,7 +15,7 @@ interface ArtistData {
 const artistData: Record<string, ArtistData> = {
   'Криско':          { tag: 'Day 1', bg: 'linear-gradient(135deg,#1a0a2e,#3d1a5c,#0d0818)', img: '/assets/krisko.webp' },
   'Мария Илиева':    { tag: 'Day 1', bg: 'linear-gradient(135deg,#0d1a2e,#1a3a5c,#080b18)', img: '/assets/maria-ilieva.webp' },
-  'Михаела Филиева': { tag: 'Day 1', bg: 'linear-gradient(135deg,#1a0d1a,#4a1a4a,#0d080d)', img: '/assets/mihaela-fileva.webp' },
+  'Михаела Филева': { tag: 'Day 1', bg: 'linear-gradient(135deg,#1a0d1a,#4a1a4a,#0d080d)', img: '/assets/mihaela-fileva.webp' },
   'Остава':          { tag: 'Day 1', bg: 'linear-gradient(135deg,#0a1a1a,#0d3a3a,#080b18)', img: '/assets/ostava.webp', horizontal: true },
   'Мона':            { tag: 'Day 1', bg: 'linear-gradient(135deg,#1a1a0a,#2a2a0d,#080b18)', img: '/assets/mona.webp' },
   'DJ Marti G':      { tag: 'Day 1', bg: 'linear-gradient(135deg,#0a1a1a,#0d2a2a,#080b18)', img: '/assets/dj-marti-g.webp' },
@@ -25,7 +25,7 @@ const artistData: Record<string, ArtistData> = {
   'Spirit Grow':     { tag: 'Day 2', bg: 'linear-gradient(135deg,#0a1a0a,#0d2a1a,#080b18)', img: '/assets/spirit-grow.webp', horizontal: true },
 };
 
-const day1 = ['Криско', 'Мария Илиева', 'Михаела Филиева', 'Остава', 'Мона', 'DJ Marti G'];
+const day1 = ['Криско', 'Мария Илиева', 'Михаела Филева', 'Остава', 'Мона', 'DJ Marti G'];
 const day2 = ['Roger Sanchez', 'Dimo BG', 'Diass', 'Spirit Grow'];
 const allArtists = Object.entries(artistData);
 
@@ -135,9 +135,22 @@ export default function Lineup() {
               <span className="pl-poster-rule" />
               <span className="pl-poster-day">{l.day1.name}</span>
             </div>
-            <p className="pl-poster-names">
-              {renderDay(day1, { hideDesktop: [2], hideMobile: [1, 2, 4] })}
+            {/* Desktop */}
+            <p className="pl-poster-names pl-day1-desktop">
+              {renderDay(day1, { hideDesktop: [2] })}
             </p>
+            {/* Mobile — three explicit lines */}
+            <div className="pl-day1-mobile">
+              <p className="pl-poster-names">
+                {renderDay(['Криско', 'Мария Илиева'], {})}
+              </p>
+              <p className="pl-poster-names">
+                <span className="pl-name">Михаела Филева</span>
+              </p>
+              <p className="pl-poster-names">
+                {renderDay(['Остава', 'Мона', 'DJ Marti G'], {})}
+              </p>
+            </div>
           </div>
 
           <div className="pl-poster-block">

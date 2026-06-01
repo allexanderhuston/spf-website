@@ -258,6 +258,9 @@ img { display: block; max-width: 100%; }
   transition: background .3s;
   border: 1px solid rgba(255,255,255,.25);
   flex-shrink: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .lang-track[aria-checked="true"] {
@@ -334,7 +337,23 @@ img { display: block; max-width: 100%; }
   transition: color .2s;
 }
 
-.mob a:hover, .mob a:last-child { color: var(--gold); }
+.mob a:hover { color: var(--gold); }
+
+.mob-cta {
+  margin-top: 8px;
+  padding: 14px 48px !important;
+  background: transparent !important;
+  color: var(--w) !important;
+  font-size: .75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .15em !important;
+  border-radius: 50px !important;
+  border: 1.5px solid var(--gold) !important;
+  width: auto !important;
+  transition: border-color .2s, color .2s !important;
+}
+
+.mob-cta:hover { color: var(--gold) !important; }
 
 /* ══════════════════════════════════════════
    HERO
@@ -802,8 +821,11 @@ img { display: block; max-width: 100%; }
     transform: translateX(-50%) !important;
     width: 52vw !important;
     height: 70vw !important;
-    pointer-events: auto;
+    pointer-events: none;
     border-radius: 8px;
+  }
+  #artist-preview.visible {
+    pointer-events: auto;
   }
   /* Horizontal artists (Остава, Spirit Grow) */
   #artist-preview.horizontal {
@@ -939,9 +961,13 @@ img { display: block; max-width: 100%; }
 
 .pl-sep-hd { display: none !important; }
 
-@media (max-width: 768px) {
+.pl-day1-mobile { display: none; }
+
+@media (max-width: 900px) {
   .pl-sep-hm { display: none !important; }
   .pl-sep-hd:not(.pl-sep-hm) { display: inline-block !important; }
+  .pl-day1-desktop { display: none; }
+  .pl-day1-mobile { display: block; }
 }
 
 .lineup-cta-wrap {
@@ -974,10 +1000,81 @@ img { display: block; max-width: 100%; }
 #tickets .sec-label { margin-bottom: 6px; }
 #tickets .sec-title { margin-bottom: 40px; }
 
+.ticket-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.ticket-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(232,229,222,.09);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color .25s, transform .25s;
+}
+
+.ticket-card:hover {
+  border-color: rgba(247,162,32,.35);
+  transform: translateY(-4px);
+}
+
+.ticket-card-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.ticket-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.ticket-card:hover .ticket-card-img {
+  transform: scale(1.03);
+}
+
+.ticket-card-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  border: none;
+  text-align: center;
+  transition: background .2s;
+  border-radius: 0;
+}
+
+.ticket-card-btn:hover { background: var(--gold2); }
+
 .passes-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .ticket-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 360px) {
+  .ticket-cards-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .pass-card {
@@ -1152,6 +1249,88 @@ img { display: block; max-width: 100%; }
 .fq.open .fq-a {
   max-height: 200px;
   padding-bottom: 20px;
+}
+
+.hotel-cards-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin: 20px clamp(20px,5vw,72px) 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.hotel-cards-grid::-webkit-scrollbar { display: none; }
+
+.hotel-card {
+  flex: 0 0 calc(20% - 10px);
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(232,229,222,.09);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color .25s, transform .25s;
+  text-decoration: none;
+}
+
+.hotel-card:hover {
+  border-color: rgba(247,162,32,.4);
+  transform: translateY(-3px);
+}
+
+.hotel-card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hotel-card-initial {
+  font-family: var(--f);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: rgba(247,162,32,.3);
+  text-transform: uppercase;
+}
+
+.hotel-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255,255,255,.03);
+}
+
+.hotel-card-name {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--w);
+  line-height: 1.3;
+}
+
+.hotel-card-book {
+  display: block;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  color: var(--w);
+  font-size: .55rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background .2s, color .2s;
+}
+
+.hotel-card:hover .hotel-card-book {
+  background: var(--gold);
+  color: var(--navy);
 }
 
 .faq-footer {
@@ -1359,6 +1538,8 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 0;
 }
 
 .ft-copy {
@@ -1393,7 +1574,8 @@ img { display: block; max-width: 100%; }
 
   .nav-links-left,
   .nav-links-right,
-  .nav-cta { display: none !important; }
+  .nav-cta,
+  .nav-lang-desktop { display: none !important; }
 
   .ham { display: flex; }
 

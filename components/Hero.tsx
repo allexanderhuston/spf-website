@@ -110,7 +110,7 @@ export default function Hero() {
         </p>
         <div className="h-ctas">
           <a href="#lineup" className="btn-outline">{h.viewLineup}</a>
-          <a href="https://sunsetfestival.bg" className="btn-fill" target="_blank" rel="noopener">{h.getTickets}</a>
+          <a href="https://www.eventim.bg/top-events/?affiliate=B9G" className="btn-fill" target="_blank" rel="noopener">{h.getTickets}</a>
         </div>
       </div>
       <div className="h-cue"><div className="cue-d" /><div className="cue-l" /></div>

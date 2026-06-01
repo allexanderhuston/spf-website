@@ -3,7 +3,7 @@ export type Lang = 'en' | 'bg';
 export const t = {
   en: {
     nav: {
-      lineup: 'Line Up',
+      lineup: 'Lineup',
       venue: 'Venue',
       tickets: 'Tickets',
       faq: 'FAQ',
@@ -12,14 +12,14 @@ export const t = {
     },
     hero: {
       tagline: 'Live the Moment',
-      location: 'Pomorie Port · Bulgaria',
+      location: 'Port Pomorie · Bulgaria',
       sub: {
         p1: 'Where the Black Sea, the music and the ',
         hl1: 'sunset',
         p2: ' become one unforgettable open-air festival experience, shaped by ',
         hl2: 'Bulgarian artists',
         p3: ' and ',
-        hl3: 'international house sounds',
+        hl3: 'global house music',
         p4: '.',
       },
       viewLineup: 'View Lineup',
@@ -27,13 +27,13 @@ export const t = {
       ticker: [
         'Sunset Port Festival',
         '22 & 23 August 2026',
-        'Pomorie Port, Bulgaria',
+        'Port Pomorie, Bulgaria',
         'Black Sea Coast',
         'Boutique Open-Air Festival',
       ],
     },
     lineup: {
-      label: 'Line Up',
+      label: 'Lineup',
       title: 'The Artists',
       day1: { date: '22.08', name: 'Saturday' },
       day2: { date: '23.08', name: 'Sunday' },
@@ -43,20 +43,20 @@ export const t = {
       title: 'Experience',
       items: [
         {
-          title: 'Sunset Behind the Stage',
-          desc: 'Watch the day turn into night as the sun drops in front of the stage and the whole festival takes on a golden-hour glow.',
+          title: 'Sunset in Front of the Stage',
+          desc: 'Watch the day turn into night as the sun goes down in front of the stage and the whole festival takes on a golden-hour glow.',
         },
         {
-          title: 'Sea on Three Sides',
-          desc: 'Set on Pomorie Port, the venue surrounds you with open views, fresh sea air and the feeling of being surrounded by the Black Sea from every angle.',
+          title: 'Surrounded by Sea',
+          desc: 'The venue is wrapped with beautiful views, fresh sea air and the Black Sea.',
         },
         {
-          title: 'Ancient Seaside Setting',
+          title: 'Historical Seaside Setting',
           desc: 'Once known as ancient Anhialo, historic Pomorie connects centuries of Black Sea history with a modern open-air festival experience.',
         },
         {
           title: 'Music by the Water',
-          desc: 'Across two nights, Sunset Port Festival brings together Bulgarian artists, live performances and international house sounds, with food, drinks and surprise moments from sunset into the late hours.',
+          desc: 'Across two nights, Sunset Port Festival brings together Bulgarian artists, live performances and global house music, with food, drinks and surprise moments from sunset into the late hours.',
         },
       ],
     },
@@ -65,50 +65,51 @@ export const t = {
       title: 'Passes',
       comingSoon: 'Ticket checkout — coming soon',
       note: 'Limited Spaces — Book Your Spot',
+      buyTickets: 'Buy Tickets',
     },
     faq: {
       label: 'FAQ',
       title: 'Questions',
-      intro: 'Everything you need to know before visiting Sunset Port Festival 2026 at Pomorie Port, including tickets, travel, accommodation, age limits, entry rules, food and drinks, payment options and accessibility.',
+      intro: 'Everything you need to know before visiting Sunset Port Festival 2026 at Port Pomorie, including tickets, travel, accommodation, age limits, entry rules, food and drinks, payment options and accessibility.',
       items: [
         {
           q: 'When and where is Sunset Port Festival 2026?',
-          a: "Sunset Port Festival takes place on 22 and 23 August 2026 at Pomorie Port, on Bulgaria's Black Sea coast. Pomorie is approximately 30 minutes from Burgas Airport and around 20 minutes from Sunny Beach.",
+          a: "Sunset Port Festival takes place on 22 and 23 August 2026 at Port Pomorie, on Bulgaria's Black Sea coast. Pomorie is 15 mins from Burgas airport and 20 mins from Sunny Beach.",
         },
         {
           q: 'Where can I buy tickets?',
           a: [
-            'Tickets are sold through the official Sunset Port Festival website and Eventim. Once ticket sales are live, you will be able to choose between single-day tickets for Saturday 22.08 or Sunday 23.08, as well as full weekend passes.',
-            'To avoid ticket scams, only buy from official ticket channels.',
+            'Tickets are on sale now at sunsetfestival.bg and eventim.bg. Single-day tickets for Saturday 22 August and Sunday 23 August are available, as well as full weekend passes.',
+            'Only purchase through official channels to avoid ticket scams.',
           ],
         },
         {
           q: 'What ticket types will be available?',
-          a: 'Sunset Port Festival will offer Day 1 tickets, Day 2 tickets and weekend passes. Day tickets give access to one festival day only, while weekend passes give access to both nights at Pomorie Port.',
+          a: 'Sunset Port Festival will offer Day 1 tickets, Day 2 tickets and weekend passes. Day tickets give access to one festival day only, while weekend passes give access to both nights at Port Pomorie.',
         },
         {
-          q: 'How do I get to Pomorie Port?',
+          q: 'How do I get to Port Pomorie?',
           a: [
-            "Pomorie is easy to reach from key locations on Bulgaria's Black Sea coast. The town is approximately 30 minutes from Burgas Airport, around 20 minutes from Sunny Beach, and within easy reach of Burgas by car, taxi or organised transport.",
-            'Festival shuttle and transport details will be announced closer to the event.',
+            "Pomorie is easy to reach from key locations on Bulgaria's Black Sea coast. The town is approximately 15 minutes from Burgas Airport and around 20 minutes from Sunny Beach, and is within easy reach of Burgas by car, taxi or organised transport.",
+            'Free parking is available near the venue. Shuttle details will be announced closer to the event.',
           ],
         },
         {
           q: 'Is there parking at the venue?',
-          a: 'Parking and shuttle information will be announced before the festival. Because August is peak season on the Black Sea coast, we recommend planning your journey in advance and following the official Sunset Port Festival channels for updates.',
+          a: 'Free parking is available near the venue. Shuttle bus details will be announced before the festival. As August is peak season on the Black Sea coast, we recommend planning your journey in advance and following the official Sunset Port Festival channels for updates.',
         },
         {
-          q: 'Where should I stay?',
+          q: 'Accommodation',
           a: [
             'Pomorie, Sunny Beach and Burgas all offer a wide range of hotels and accommodation options. August is a busy period on the Black Sea coast, so early booking is strongly recommended.',
-            'Recommended partner hotels for Sunset Port Festival guests will be announced soon.',
+            'Recommended partner hotels for Sunset Port Festival.',
           ],
         },
         {
           q: 'What is the age limit?',
           a: [
-            "Day 1, Saturday 22.08, is open to guests aged 16+. Guests aged 16–17 must be accompanied by a responsible adult throughout the event. If the accompanying adult is not the guest's parent or legal guardian, a notarised parental consent declaration must be presented upon entry.",
-            'Day 2, Sunday 23.08, is strictly 18+ with valid ID. ID checks will take place at the entrance and at all bars.',
+            "Day 1 (22.08) is open to guests aged 16+. Guests aged 16–17 must be accompanied by a parent or responsible adult. If the accompanying adult is not the guest's parent or legal guardian, a notarised parental consent declaration must be presented on arrival.",
+            'Day 2 (23.08) is strictly 18+ with valid ID. Alcoholic beverages are sold to guests aged 18 and over only. Age verification will be carried out at all bars on both days.',
           ],
         },
         {
@@ -117,21 +118,21 @@ export const t = {
         },
         {
           q: 'Will there be food and drinks?',
-          a: 'Yes. Food vendors and bars will be available at the venue throughout both festival days. Visitors can expect food, drinks and festival extras designed to complement the open-air experience at Pomorie Port.',
+          a: 'Yes. Food vendors and bars will be available at the venue throughout both festival days. Visitors can expect food, drinks and festival extras designed to complement the open-air experience at Port Pomorie.',
         },
         {
           q: 'Can I pay by card?',
-          a: 'Yes. Bars and food vendors at the festival will accept both cash and card payments.',
+          a: 'Yes. Bars and food vendors at the festival accept card payments only. The festival is cashless — no cash will be accepted on site.',
         },
         {
           q: 'Can I leave and re-enter the festival?',
-          a: 'No. Re-entry is not permitted once you leave the festival venue. Please make sure you have everything you need before entering Pomorie Port.',
+          a: 'No. Re-entry is not permitted once you leave the festival venue. Please make sure you have everything you need before entering Port Pomorie.',
         },
         {
           q: 'What should I bring?',
           a: [
-            'Bring a valid ID, your ticket, a bank card or cash, sunscreen, and a light jacket or layer for the evening. Small personal bags are allowed.',
-            'Do not bring outside food or drinks, glass bottles, alcohol, professional cameras without accreditation, drones, fireworks, flares, weapons, illegal substances, large umbrellas, chairs, stools or any item that may be considered unsafe by security.',
+            'Bring a valid ID, your ticket, a bank card, sunscreen, and a light jacket or layer for the evening. Small personal bags are allowed.',
+            'Do not bring outside food or drinks, glass bottles, alcohol, professional cameras without accreditation, drones, fireworks, flares, weapons, illegal substances, selfie sticks, large umbrellas, chairs, stools or any item that may be considered unsafe by security. Security reserves the right to confiscate any item deemed dangerous or inappropriate.',
           ],
         },
         {
@@ -150,7 +151,7 @@ export const t = {
         },
         {
           q: 'Is the venue accessible?',
-          a: 'Pomorie Port has flat, paved areas and accessible facilities. If you have specific accessibility requirements, contact the festival team before the event so they can help you plan the best possible experience.',
+          a: 'Port Pomorie has flat, paved areas and accessible facilities. If you have specific accessibility requirements, contact the festival team before the event so they can help you plan the best possible experience.',
         },
         {
           q: 'Will the full schedule and set times be announced?',
@@ -159,20 +160,20 @@ export const t = {
       ],
     },
     cta: {
-      tag: 'Pomorie Port · Bulgaria',
+      tag: 'Port Pomorie · Bulgaria',
       line1: "Don't Miss",
       line2: 'The',
       highlight: 'Sunset',
       getTickets: 'Get Tickets',
       viewLineup: 'View Lineup',
       meta: '22 & 23 August 2026',
-      tagline: 'Two nights. One seaside stage. Music, sea views and golden-hour moments at Pomorie Port.',
+      tagline: 'Two nights. One seaside stage. Music, sea views and golden-hour moments at Port Pomorie.',
     },
     footer: {
       info: '22 & 23 August 2026',
-      location: 'Pomorie Port, Bulgaria',
+      location: 'Port Pomorie, Bulgaria',
       links: {
-        lineup: 'Line Up',
+        lineup: 'Lineup',
         venue: 'Venue',
         tickets: 'Tickets',
         faq: 'FAQ',
@@ -183,7 +184,7 @@ export const t = {
 
   bg: {
     nav: {
-      lineup: 'Лайн ъп',
+      lineup: 'Лайнъп',
       venue: 'Място',
       tickets: 'Билети',
       faq: 'ЧЗВ',
@@ -192,14 +193,14 @@ export const t = {
     },
     hero: {
       tagline: 'Живей Момента',
-      location: 'Пристанище Поморие · България',
+      location: 'Пристанище Поморие · България',
       sub: {
         p1: 'Където Черно море, музиката и ',
         hl1: 'залезът',
         p2: ' се сливат в едно незабравимо изживяване под открито небе, създадено от ',
         hl2: 'български артисти',
         p3: ' и ',
-        hl3: 'международни хаус звуци',
+        hl3: 'глобална хаус музика',
         p4: '.',
       },
       viewLineup: 'Виж Лайнъпа',
@@ -213,7 +214,7 @@ export const t = {
       ],
     },
     lineup: {
-      label: 'Лайн ъп',
+      label: 'Лайнъп',
       title: 'Артистите',
       day1: { date: '22.08', name: 'Събота' },
       day2: { date: '23.08', name: 'Неделя' },
@@ -227,16 +228,16 @@ export const t = {
           desc: 'Наблюдавай как денят се превръща в нощ, докато слънцето залязва пред сцената и целият фестивал се потапя в блясъка на златния час.',
         },
         {
-          title: 'Море от три страни',
-          desc: 'Разположен на Пристанище Поморие, фестивалът те обгражда с открити гледки, свеж морски въздух и усещането да бъдеш заобиколен от Черно море от всяка страна.',
+          title: 'Заобиколени от море',
+          desc: 'Мястото е обгърнато с красиви гледки, свеж морски въздух и Черно море.',
         },
         {
-          title: 'Древна морска обстановка',
+          title: 'Историческа морска обстановка',
           desc: 'Известен някога като древния Анхиало, историческият Поморие свързва векове черноморска история с модерно фестивално изживяване под открито небе.',
         },
         {
           title: 'Музика край водата',
-          desc: 'В продължение на две нощи, Sunset Port Festival събира български артисти, живи изпълнения и международни хаус звуци, с храна, напитки и изненадващи моменти от залез до късни часове.',
+          desc: 'В продължение на две нощи, Sunset Port Festival събира български артисти, живи изпълнения и глобална хаус музика, с храна, напитки и изненадващи моменти от залез до късни часове.',
         },
       ],
     },
@@ -245,6 +246,7 @@ export const t = {
       title: 'Пасове',
       comingSoon: 'Покупка на билети — очаквайте скоро',
       note: 'Ограничени места — Запази своето',
+      buyTickets: 'Купи Билет',
     },
     faq: {
       label: 'ЧЗВ',
@@ -253,42 +255,42 @@ export const t = {
       items: [
         {
           q: 'Кога и къде е Sunset Port Festival 2026?',
-          a: 'Sunset Port Festival се провежда на 22 и 23 август 2026 г. на Пристанище Поморие, на черноморския бряг на България. Поморие е на около 30 минути от Летище Бургас и около 20 минути от Слънчев бряг.',
+          a: 'Sunset Port Festival се провежда на 22 и 23 август 2026 г. на Пристанище Поморие, на черноморския бряг на България. Поморие е на 15 минути от Летище Бургас и на 20 минути от Слънчев бряг.',
         },
         {
           q: 'Откъде мога да купя билети?',
           a: [
-            'Билетите се продават чрез официалния уебсайт на Sunset Port Festival и Eventim. Когато продажбата на билети стартира, ще можете да избирате между еднодневни билети за събота 22.08 или неделя 23.08, както и уикенд пасове.',
-            'За да избегнете измами с билети, купувайте само от официални канали.',
+            'Билетите са в продажба на sunsetfestival.bg и eventim.bg. Налични са еднодневни билети за събота 22 август и неделя 23 август, както и уикенд пасове.',
+            'Купувайте само от официални канали, за да избегнете измами с билети.',
           ],
         },
         {
           q: 'Какви видове билети ще бъдат налични?',
-          a: 'Sunset Port Festival ще предлага билети за Ден 1, билети за Ден 2 и уикенд пасове. Еднодневните билети дават достъп само до един фестивален ден, докато уикенд пасовете осигуряват достъп и до двете нощи на Пристанище Поморие.',
+          a: 'Sunset Port Festival предлага билети за Ден 1, билети за Ден 2 и уикенд пасове. Еднодневните билети дават достъп само до един фестивален ден, докато уикенд пасовете осигуряват достъп и до двете нощи на Пристанище Поморие.',
         },
         {
           q: 'Как да стигна до Пристанище Поморие?',
           a: [
-            'Поморие е лесно достъпен от ключови места по черноморското крайбрежие на България. Градът е на около 30 минути от Летище Бургас, около 20 минути от Слънчев бряг и в лесна близост до Бургас с кола, такси или организиран транспорт.',
-            'Подробности за фестивалния шатъл и транспорт ще бъдат обявени по-близо до събитието.',
+            'Поморие е лесно достъпен от ключови места по черноморското крайбрежие на България. Градът е на около 15 минути от Летище Бургас, около 20 минути от Слънчев бряг и в лесна близост до Бургас с кола, такси или организиран транспорт.',
+            'Безплатен паркинг е наличен в близост до фестивалното място. Подробности за шатъл транспорт ще бъдат обявени по-близо до събитието.',
           ],
         },
         {
           q: 'Има ли паркинг на място?',
-          a: 'Информация за паркинг и шатъл ще бъде обявена преди фестивала. Тъй като август е пик сезон по черноморското крайбрежие, препоръчваме да планирате пътуването си предварително и да следвате официалните канали на Sunset Port Festival за актуална информация.',
+          a: 'Безплатен паркинг е наличен в близост до фестивалното място. Подробности за шатъл автобус ще бъдат обявени преди фестивала. Тъй като август е пик сезон по черноморското крайбрежие, препоръчваме да планирате пътуването си предварително и да следвате официалните канали на Sunset Port Festival за актуална информация.',
         },
         {
-          q: 'Къде да отседна?',
+          q: 'Настаняване',
           a: [
             'Поморие, Слънчев бряг и Бургас предлагат широк спектър от хотели и настанявания. Август е натоварен период по черноморското крайбрежие, затова ранното резервиране е силно препоръчително.',
-            'Препоръчани партньорски хотели за гостите на Sunset Port Festival ще бъдат обявени скоро.',
+            'Препоръчани партньорски хотели за Sunset Port Festival.',
           ],
         },
         {
           q: 'Каква е възрастовата граница?',
           a: [
-            'Ден 1, събота 22.08, е за гости на 16+ години. Гостите на 16–17 години трябва да бъдат придружени от отговорен възрастен по време на цялото събитие. Ако придружаващият възрастен не е родител или законен настойник на госта, при влизане трябва да се представи нотариално заверена декларация за родителско съгласие.',
-            'Ден 2, неделя 23.08, е строго 18+ с валидна лична карта. Проверка на документи ще се извършва на входа и на всички барове.',
+            'Ден 1 (22.08) е за гости на 16+ години. Гостите на 16–17 години трябва да бъдат придружени от родител или отговорен възрастен. Ако придружаващият възрастен не е родител или законен настойник на госта, при пристигане трябва да се представи нотариално заверена декларация за родителско съгласие.',
+            'Ден 2 (23.08) е строго 18+ с валидна лична карта. Алкохолни напитки се продават само на гости навършили 18 години. Проверка на възрастта ще се извършва на всички барове и в двата дни.',
           ],
         },
         {
@@ -297,11 +299,11 @@ export const t = {
         },
         {
           q: 'Ще има ли храна и напитки?',
-          a: 'Да. Заведения за хранене и барове ще бъдат на разположение на място и в двата фестивални дни. Посетителите могат да очакват храна, напитки и фестивални допълнения, създадени да допълнят изживяването на открито в Пристанище Поморие.',
+          a: 'Да. Заведения за хранене и барове ще бъдат на разположение на място и в двата фестивални дни. Посетителите могат да очакват храна, напитки и фестивални допълнения, създадени да допълнят изживяването на открито на Пристанище Поморие.',
         },
         {
           q: 'Мога ли да плащам с карта?',
-          a: 'Да. Баровете и заведенията за хранене на фестивала ще приемат плащания и в брой, и с карта.',
+          a: 'Да. Баровете и заведенията за хранене на фестивала приемат единствено плащания с карта. Фестивалът е безкасов — плащания в брой няма да се приемат на място.',
         },
         {
           q: 'Мога ли да напусна и да се върна на фестивала?',
@@ -310,8 +312,8 @@ export const t = {
         {
           q: 'Какво да взема?',
           a: [
-            'Вземете валидна лична карта, билет, банкова карта или пари в брой, слънцезащитен крем и лека яке или блуза за вечерта. Разрешени са малки лични чанти.',
-            'Не внасяйте храна или напитки отвън, стъклени бутилки, алкохол, професионални камери без акредитация, дронове, фойерверки, сигнални ракети, оръжия, незаконни вещества, големи чадъри, столове, табуретки или предмети, считани за опасни от охраната.',
+            'Вземете валидна лична карта, билет, банкова карта, слънцезащитен крем и лека яке или блуза за вечерта. Разрешени са малки лични чанти.',
+            'Не внасяйте храна или напитки отвън, стъклени бутилки, алкохол, професионални камери без акредитация, дронове, фойерверки, сигнални ракети, оръжия, незаконни вещества, селфи стикове, големи чадъри, столове, табуретки или предмети, считани за опасни от охраната. Охраната си запазва правото да конфискува всеки предмет, счетен за опасен или неподходящ.',
           ],
         },
         {
@@ -352,7 +354,7 @@ export const t = {
       info: '22 и 23 Август 2026',
       location: 'Пристанище Поморие, България',
       links: {
-        lineup: 'Лайн ъп',
+        lineup: 'Лайнъп',
         venue: 'Място',
         tickets: 'Билети',
         faq: 'ЧЗВ',
